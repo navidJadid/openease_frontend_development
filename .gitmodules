@@ -1,0 +1,12 @@
+[submodule "openease_css"]
+	path = openease_css
+	url = https://github.com/navidJadid/openease_css.git
+[submodule "openease_flask"]
+	path = openease_flask
+	url = https://github.com/navidJadid/openease_flask.git
+[submodule "openease_js"]
+	path = openease_js
+	url = https://github.com/navidJadid/openease_js.git
+[submodule "openease_postgres"]
+	path = openease_postgres
+	url = https://github.com/navidJadid/openease_postgres.git
