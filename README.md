@@ -32,7 +32,7 @@ If this repository is cloned normally, then the submodules will not be cloned to
 
 **TODO: pushing and pulling from repositories**
 
-Check the following [documentation](https://git-scm.com/book/en/v2/Git-Tools-Submodules) for a more in depth explanation of git-submodules.
+Check the following [documentation](https://git-scm.com/book/en/v2/Git-Tools-Submodules) for a more in-depth explanation of git-submodules.
 
 ##### 3. Building and running the whole thing
 **TODO: DOCKER STUFF**
