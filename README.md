@@ -3,11 +3,11 @@
 <!--ts-->
 <!--te-->
 
-(Table of contents created with this cool [tool][1])
+(Table of contents created with this cool [tool](https://github.com/ekalinin/github-markdown-toc#usage))
 
 ### Table of Contents
 1. Background and purpose of this repository
-2. Setting up the repository for correctly
+2. Setting up and cloning the repository correctly
 3. Building and running the whole thing
 4. Development procedure
 
@@ -32,12 +32,10 @@ If this repository is cloned normally, then the submodules will not be cloned to
 
 **TODO: pushing and pulling from repositories**
 
-Check the following [documentation][0] for a more in depth explanation of git-submodules.
+Check the following [documentation](https://git-scm.com/book/en/v2/Git-Tools-Submodules) for a more in depth explanation of git-submodules.
 
 ##### 3. Building and running the whole thing
 **TODO: DOCKER STUFF**
 
 ##### 4. Development procedure
 
-[0]: [https://git-scm.com/book/en/v2/Git-Tools-Submodules]
-[1]: [https://github.com/ekalinin/github-markdown-toc#usage]
