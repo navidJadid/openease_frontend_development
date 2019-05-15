@@ -1,6 +1,15 @@
 # openease_webserver_development
 
 <!--ts-->
+   * [openease_webserver_development](#openease_webserver_development)
+         * [Table of Contents](#table-of-contents)
+               * [1. Background and purpose of this repository](#1-background-and-purpose-of-this-repository)
+               * [2. Setting up and cloning the repository correctly](#2-setting-up-and-cloning-the-repository-correctly)
+               * [3. Building and running the whole thing](#3-building-and-running-the-whole-thing)
+               * [4. Development procedure](#4-development-procedure)
+
+<!-- Added by: navid, at: Mi 15. Mai 13:11:53 CEST 2019 -->
+
 <!--te-->
 
 (Table of contents created with this cool [tool][1])
