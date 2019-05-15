@@ -34,6 +34,8 @@ If this repository is cloned normally, then the submodules will not be cloned to
 ##### 3. Working with the repository correctly
 Pushing and pulling changes from the main repository works as usual. So let's see how to do the same for the submodules:
 
+**Side note**: As of version 2019.1 on, most or all JetBrains IDEs support git-submodules and the following actions natively from the IDE (if you want to avoid the command line).
+
 1. For updating **all** the submodules from the main repository, run this command in the root directory of the repository:
 
     ```
@@ -51,8 +53,6 @@ Pushing and pulling changes from the main repository works as usual. So let's se
     This will check all the submodules for changes and try to push changes them first, but if that fails, the main push will be aborted as well.
 
     Again, if you want to manually push for each submodule and check for each push from the main repository if there are changes in the submodules before pushing, see the documentation linked in [¹].
-
-**Side note**: Most or all JetBrains IDEs from Version 2019.1 on support git-submodules and the mentioned actions natively from the IDE (if you want to avoid the command line).
 
 [¹]: We strongly recommend reading through the [git-submodules documentation](https://git-scm.com/book/en/v2/Git-Tools-Submodules) once, as this project's documentation cannot touch on all the problems that might occur when using git-submodules. Among other things, it covers how to set the branches to update from for the submodules in `.gitmodules`, how to display changes of the submodules when calling `git diff` in the main repository, how to avoid overwriting local changes when updating submodules and how to merge changes in the submodules. 
 
