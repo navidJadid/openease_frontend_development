@@ -40,7 +40,7 @@ Pushing and pulling changes from the main repository works as usual. So let's se
     git submodule update --remote
     ```
 
-    This however assumes that you want to update from the master branch of the respective repositories. If you want to update from a different branch or only update specific modules, see the git-submodules documentation[¹]([¹]). The link in the footnote also covers **how to avoid overwriting local changes** when updating the submodules. This will likely happen, because on default the submodules will be be run in detached HEAD state by git. Basically the solution involves checking out a specific branch for each submodule, but please refer to the mentioned documentation for a more in-depth explanation.
+    This however assumes that you want to update from the master branch of the respective repositories. If you want to update from a different branch or only update specific modules, see the git-submodules documentation[¹]. The link in the footnote also covers **how to avoid overwriting local changes** when updating the submodules. This will likely happen, because on default the submodules will be be run in detached HEAD state by git. Basically the solution involves checking out a specific branch for each submodule, but please refer to the mentioned documentation for a more in-depth explanation.
 
 2. For committing changes in projects with submodules it is usually best to first commit the changes in the submodules. This is because there may be changes in the main project which depend on the changes in the submodules, so they need.
 
@@ -50,7 +50,7 @@ Pushing and pulling changes from the main repository works as usual. So let's se
 
     This will check all the submodules for changes and try to push changes them first, but if that fails, the main push will be aborted as well.
 
-    Again, if you want to manually push for each submodule and check for each push from the main repository if there are changes in the submodules before pushing, see the documentation linked in [¹]([¹]).
+    Again, if you want to manually push for each submodule and check for each push from the main repository if there are changes in the submodules before pushing, see the documentation linked in [¹].
 
 **Side note**: Most or all JetBrains IDEs from Version 2019.1 on support git-submodules and the mentioned actions natively from the IDE (if you want to avoid the command line).
 
