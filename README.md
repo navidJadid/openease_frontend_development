@@ -44,7 +44,7 @@ Pushing and pulling changes from the main repository works as usual. So let's se
 
     This however assumes that you want to update from the master branch of the respective repositories. If you want to update from a different branch or only update specific modules, see the git-submodules documentation[¹]. The link in the footnote also covers **how to avoid overwriting local changes** when updating the submodules. This will likely happen, because on default the submodules will be be run in detached HEAD state by git. Basically the solution involves checking out a specific branch for each submodule, but please refer to the mentioned documentation for a more in-depth explanation.
 
-2. For committing changes in projects with submodules it is usually best to first commit the changes in the submodules. This is because there may be changes in the main project which depend on the changes in the submodules, so they need.
+2. For committing changes in projects with submodules it is usually best to first commit the changes in the submodules. This is because there may be changes in the main project which depend on the changes in the submodules and if those are not pushed prior the main repository will reference an old state of the submodule. Luckily git provides the following command: 
 
     ```
     git push --recurse-submodules=on-demand
