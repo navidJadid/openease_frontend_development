@@ -34,7 +34,7 @@ If this repository is cloned normally, then the submodules will not be cloned to
 ##### 3. Working with the repository correctly
 Pushing and pulling changes from the main repository works as usual. So let's see how to do the same for the submodules:
 
-**Side note**: As of version 2019.1 on, most or all JetBrains IDEs support git-submodules and the following actions natively from the IDE (if you want to avoid the command line).
+**Side note**: As of version 2019.1 on, most or all JetBrains IDEs (and maybe other IDEs too) support git-submodules and the following actions natively from the IDE (if you want to avoid the command line).
 
 1. For updating **all** the submodules from the main repository, run this command in the root directory of the repository:
 
@@ -57,7 +57,34 @@ Pushing and pulling changes from the main repository works as usual. So let's se
 [¹]: We strongly recommend reading through the [git-submodules documentation](https://git-scm.com/book/en/v2/Git-Tools-Submodules) once, as this project's documentation cannot touch on all the problems that might occur when using git-submodules. Among other things, it covers how to set the branches to update from for the submodules in `.gitmodules`, how to display changes of the submodules when calling `git diff` in the main repository, how to avoid overwriting local changes when updating submodules and how to merge changes in the submodules. 
 
 ##### 4. Building and running the whole thing
-**TODO: DOCKER STUFF**
+This project requires the use of:
+1. `docker` ([docker distributions and installation guides for different OS](https://docs.docker.com/install/))
+2. `docker-compose` ([installation guide](https://docs.docker.com/compose/install/)).
+
+**TODO: Maybe remove**
+**Side note**: Once again, many of the following actions can be performed from inside current versions of JetBrains-IDEs (and probably other IDEs as well) if you want to avoid the command line.
+
+To build and start the project (in detached mode mind you) run the following command in the root directory of the project:
+
+    ```
+    docker-compose up -d
+    ``` 
+
+The build might take a while (~20 min), as some of the required images are quite large. We are working to reduce their sizes and the build time, but for now it unfortunately is what it is.
+
+Use the following command to see what is currently running:
+
+    ```
+    docker-compose ps
+    ```
+
+To stop the container execute the following command:
+
+    ```
+    docker-compose down
+    ```
+
+For more information on `docker-compose` check the [documentation](https://docs.docker.com/compose/overview/).
 
 ##### 5. Development procedure
 
