@@ -61,7 +61,6 @@ This project requires the use of:
 1. `docker` ([docker distributions and installation guides for different OS](https://docs.docker.com/install/))
 2. `docker-compose` ([installation guide](https://docs.docker.com/compose/install/)).
 
-**TODO: Maybe remove**
 **Side note**: Once again, many of the following actions can be performed from inside current versions of JetBrains-IDEs (and probably other IDEs as well) if you want to avoid the command line.
 
 To build and start the project (in detached mode mind you) run the following command in the root directory of the project:
@@ -70,9 +69,9 @@ To build and start the project (in detached mode mind you) run the following com
     docker-compose up -d
     ``` 
 
-The build might take a while (~20 min), as some of the required images are quite large. We are working to reduce their sizes and the build time, but for now it unfortunately is what it is.
+Unfortunately as of right now, the build might take a while (~20 min), as some of the required images are quite large. We are working to reduce their sizes and the build time, but for now it unfortunately is what it is.
 
-Use the following command to see what is currently running:
+After the build was successful, use the following command to see which containers are currently running:
 
     ```
     docker-compose ps
