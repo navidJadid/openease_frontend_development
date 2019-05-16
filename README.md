@@ -83,6 +83,18 @@ To stop the container execute the following command:
     docker-compose down
     ```
 
+To rebuild existing images, execute either of the following two commands:
+
+    ```
+    docker-compose build
+    ```
+
+or
+
+    ```
+    docker-compose up -d --build
+    ```
+
 For more information on `docker-compose` check the [documentation](https://docs.docker.com/compose/overview/).
 
 ##### 5. Development procedure
