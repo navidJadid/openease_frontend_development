@@ -34,7 +34,11 @@ If this repository is cloned normally, then the submodules will not be cloned to
         This clones the main repository and then does this recursively for all sub-repositories.
 
 - **If you do not have write access to all the repositories in use**:  
-    First you will need to fork and normally clone the main repository. This will clone the empty directories of the submodules (because we did not tell git yet to clone the repositories of the submodules; we will see why in a second). Now fork but do not clone (yet) the repositories of each of the submodules that you want to develop. Next go into the `.gitmodules`-file of the main repository and change the url for the repositories which you forked. That should look something like this:
+    First you will need to fork (on [GitHub](https://www.GitHub.com)) and normally clone the main repository. This will clone the empty directories of the submodules (because we did not tell git yet to clone the repositories of the submodules; we will see why in a second). Now fork but do not clone (yet) the repositories of each of the submodules that you want to develop. 
+    
+    (Alternatively you can clone the main repository with all the submodules (as explained in the section for developers with write access) and then fork with with the command line.)
+    
+    Next go into the `.gitmodules`-file of the main repository and change the url for the repositories which you forked. That should look something like this:
     
     ```
     ...
