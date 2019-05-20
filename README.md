@@ -13,23 +13,45 @@ As of May 2019 the openEASE project has launched with a new project architecture
 ##### 2. Setting up and cloning the repository correctly
 This repository utilizes git-submodules which allows us to include and develop the dependencies of this project, without having to include their files directly into this git-repository. When cloning this project correctly (which we will explain in a minute) the submodules are cloned from their own repositories. Now when changes are made to the submodules they are only pushed to the repository of the respective module and not to this repository.
 
-If this repository is cloned normally, then the submodules will not be cloned together with the main repository. There will be subfolders, but those will be empty. To load the repository with all submodules, either of the following two approaches will work:
+If this repository is cloned normally, then the submodules will not be cloned together with the main repository. There will be subfolders, but those will be empty. Now depending on whether you have write access to the repositories in use here (meaning this repository and all the repositories of the sub-modules), the workflow is slightly different:
 
-1. If the repository is normally cloned, the sub directories will be included but empty as mentioned. To clone the sub-repositories run the following two commands in the root of this repository:
+- **If you have write access to all the repositories in use** or just want to run the project and not commit changes:  
+    To load the repository with all submodules either of the following two approaches will work:
 
+    1. If the repository is normally cloned, the sub directories will be included but empty as mentioned. To clone the sub-repositories run the following two commands in the root of this repository:
+
+        ```
+        git submodule init
+        git submodule update
+        ```
+
+    2. Alternatively add `--recurse-submodules` when cloning this repository, which should look like this:
+
+        ```
+        git clone --recurse-submodules https://github.com/navidJadid/openease_webserver_development.git
+        ```
+
+        This clones the main repository and then does this recursively for all sub-repositories.
+
+- **If you do not have write access to all the repositories in use**:  
+    First you will need to fork and normally clone the main repository. This will clone the empty directories of the submodules (because we did not tell git yet to clone the repositories of the submodules; we will see why in a second). Now fork but do not clone (yet) the repositories of each of the submodules that you want to develop. Next go into the `.gitmodules`-file of the main repository and change the url for the repositories which you forked. That should look something like this:
+    
     ```
-    git submodule init
-    git submodule update
+    ...
+    [submodule "openease_flask"]
+	 path = openease_flask
+	 url = <url of your forked repository>
+    ...
     ```
+    
+    Lastly, to clone the sub-repositories run the following two commands in the root of the main repository:
 
-2. Alternatively add `--recurse-submodules` when cloning this repository, which should look like this:
-
-    ```
-    git clone --recurse-submodules https://github.com/navidJadid/openease_webserver_development.git
-    ```
-
-    This clones the main repository and then does this recursively for all sub-repositories.
-
+     ```
+     git submodule init
+     git submodule update
+     ```
+     
+     As implied above, you do not need to fork all the submodules if you do not want to develop them. In that case they will just have a downstream from our repositories, but remember: since you do not have write access you will not have upstream for that respective repository.
 
 ##### 3. Working with the repository correctly
 Pushing and pulling changes from the main repository works as usual. So let's see how to do the same for the submodules:
@@ -65,35 +87,35 @@ This project requires the use of:
 
 To build and start the project (in detached mode mind you) run the following command in the root directory of the project:
 
-    ```
-    docker-compose up -d
-    ``` 
+```
+docker-compose up -d
+``` 
 
-Unfortunately as of right now, the build might take a while (~20 min), as some of the required images are quite large. We are working to reduce their sizes and the build time, but for now it unfortunately is what it is.
+On consecutive executions the same command will just start up the containers of the images (given that the images are not deleted). Unfortunately as of right now, the build might take a while (~20 min), as some of the required images are quite large (mainly the openease-flask image). We are working to reduce their sizes and the build time, but for now it unfortunately is what it is.
 
 After the build was successful, use the following command to see which containers are currently running:
 
-    ```
-    docker-compose ps
-    ```
+```
+docker-compose ps
+```
 
 To stop the container execute the following command:
 
-    ```
-    docker-compose down
-    ```
+```
+docker-compose down
+```
 
-To rebuild existing images, execute either of the following two commands:
+Docker will not rebuild images automatically when code is changed. It will only reconfigure (which is not the same as build) the image if the `dockerfile` or the `docker-compose` were changed. To rebuild existing images, execute either of the following two commands:
 
-    ```
-    docker-compose build
-    ```
+```
+docker-compose build
+```
 
 or
 
-    ```
-    docker-compose up -d --build
-    ```
+```
+docker-compose up -d --build
+```
 
 For more information on `docker-compose` check the [documentation](https://docs.docker.com/compose/overview/).
 
