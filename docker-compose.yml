@@ -1,5 +1,41 @@
 version: '2'
 services:
+  # Nginx serves requests on port 80/443 through rediecting
+  # to flask and other web applications.
+  nginx:
+    image: nginx
+    container_name: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - nginx:/etc/nginx/conf.d
+      - ./certs:/etc/nginx/certs
+    # FIXME: For some reason this is required now, else nginx uns
+    #        into timeouts when talking to ROS.
+    network_mode: "host"
+  
+  # dockergen updates nginx configuration when new docker container appear,
+  # and notifies nginx about the change.
+  dockergen:
+    image: jwilder/docker-gen
+    container_name: docker-gen
+    command: -notify-sighup nginx -watch /etc/docker-gen/templates/nginx.tmpl /etc/nginx/conf.d/default.conf
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./nginx.tmpl:/etc/docker-gen/templates/nginx.tmpl
+      - ./certs:/etc/nginx/certs
+      - nginx:/etc/nginx/conf.d
+  
+  # an interface to the docker API of the host
+  dockerbridge:
+    image: "openease/dockerbridge"
+    container_name: dockerbridge
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - EASE_DEBUG=${EASE_DEBUG}
+
   # postgres is used to store e.g. user accounts, roles,
   # data displayed in the webpage
   postgres:
@@ -9,6 +45,28 @@ services:
       - postgres:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=docker
+  
+  # mongo holds episodic memory data
+  # TODO: spawn one for each user after an episode 
+  #       has been selected, and only load the data of
+  #       that specific episode.
+  #       - use multirepo to hold imported mongo data
+  #       - then use the multirepo folder as volume for that mongo instance
+  mongo:
+    image: "mongo"
+    container_name: mongo
+    network_mode: bridge
+    volumes:
+      - mongo:/data/db
+    #ports:
+    #  - "27017:27017"
+
+  # a volume that holds a secret key
+  secret_init:
+    image: "busybox"
+    command: sh -c '< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c 64 > /etc/ease_secret/secret'
+    volumes:
+      - secret:/etc/ease_secret
 
   # a volume that holds CSS code
   openease_css:
@@ -21,7 +79,19 @@ services:
     build: ./openease_js
     volumes:
       - openease_core:/opt/webapp/webrob/static/lib
-
+  
+  # a volume that holds JS code to interface the D3 library
+  chart_vis:
+    image: "openease/d3"
+    volumes:
+      - chart_vis:/opt/webapp/webrob/static/lib/chart
+  
+  # a volume that holds JS code to interface the THREEJS library for ROS marker visualization
+  marker_vis:
+    image: "openease/threejs"
+    volumes:
+      - marker_vis:/opt/webapp/webrob/static/lib/vis
+  
   # the openEASE flask webapp
   openease:
     build: ./openease_flask
@@ -32,9 +102,17 @@ services:
       - "5000:5000"
     links:
       - postgres
+      - dockerbridge
+      - mongo
     volumes:
+      - secret:/etc/ease_secret:ro
+      - lft:/tmp/openEASE/dockerbridge
       - openease_core:/opt/webapp/webrob/static/lib
       - openease_css:/opt/webapp/webrob/static/css
+      - chart_vis:/opt/webapp/webrob/static/lib/chart # TODO: use multirepo instead
+      - marker_vis:/opt/webapp/webrob/static/lib/vis  # TODO: use multirepo instead
+      - episodes_data:/episodes                       # TODO: use multirepo instead
+      - meshes:/home/ros/mesh_data                    # TODO: use multirepo instead
     environment:
       # these are for docker-gen to recognize this container
       - VIRTUAL_HOST=openease
@@ -45,6 +123,8 @@ services:
       - POSTGRES_PORT_5432_TCP_PORT=5432
       - DOCKERBRIDGE_PORT_5001_TCP_ADDR=dockerbridge
       - DOCKERBRIDGE_PORT_5001_TCP_PORT=5001
+      - MONGO_PORT_27017_TCP_ADDR=172.17.42.1
+      - MONGO_PORT_27017_TCP_PORT=27017
       #
       - OPENEASE_ADMIN_PASSWORD=${OPENEASE_ADMIN_PASSWORD}
       - OPENEASE_MAIL_USERNAME=${OPENEASE_MAIL_USERNAME}
@@ -59,10 +139,46 @@ services:
       - TWITTER_APP_SECRET=${TWITTER_APP_SECRET}
       - GOOGLE_APP_SECRET=${GOOGLE_APP_SECRET}
       - GOOGLE_APP_ID=${GOOGLE_APP_ID}
+  #docker_compose_ui:
+    #restart: always
+    #image: francescou/docker-compose-ui:1.13.0
+    #container_name: docker_compose_ui
+    #hostname: docker_compose_ui
+    #working_dir: /opt/docker-compose-projects/
+    #environment:
+    #- 'WEB_CONSOLE_PATTERN=/web-console/?cid={containerName}&cmd={command}'
+    #volumes:
+    #- /var/run/docker.sock:/var/run/docker.sock
+  #web_console:
+    #image: bitbull/docker-exec-web-console
+    #environment:
+    #- 'CONTEXT_PATH=/web-console/'
+    #read_only: true
+    #restart: always
+    #volumes:
+    #- /var/run/docker.sock:/var/run/docker.sock
 volumes:
+  episodes_data:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: ${OPENEASE_EPISODE_DATA}
+  # large file transfer volume
+  lft:
+  # secret key volume
+  secret:
   # sql data volume
   postgres:
+  # nginx configuration
+  nginx:
   # openEASE CSS code
   openease_css:
   # openEASE JS code
   openease_core:
+  # openEASE D3/THREEJS code
+  chart_vis:  # TODO: use multirepo instead
+  marker_vis: # TODO: use multirepo instead
+  # mongo & mesh data volume
+  mongo:  # TODO: use multirepo instead
+  meshes: # TODO: use multirepo instead
