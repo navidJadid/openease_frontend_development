@@ -55,7 +55,7 @@ If this repository is cloned normally, then the submodules will not be cloned to
      git submodule update
      ```
      
-     As implied above, you do not need to fork all the submodules if you do not want to develop them. In that case they will just have a downstream from our repositories, but remember: since you do not have write access you will not have upstream for that respective repository.
+     As implied above, you do not need to fork all the submodules if you do not want to develop them. In that case those will just have a downstream from our repositories, but remember: since you do not have write access you will not have upstream for those respective repositories.
 
 ##### 3. Working with the repository correctly
 Pushing and pulling changes from the main repository works as usual. So let's see how to do the same for the submodules:
@@ -89,13 +89,33 @@ This project requires the use of:
 
 **Side note**: Once again, many of the following actions can be performed from inside current versions of JetBrains-IDEs (and probably other IDEs as well) if you want to avoid the command line.
 
-To build and start the project (in detached mode mind you) run the following command in the root directory of the project:
+First it is necessary to create an 'episodes'-folder on your machine and set an environment variable pointing to it. This is needed, because some module in the open-EASE project requires such a folder to exist, otherwise the build will not complete. Again, we know this an inconvenience and we are working to have the project work without this necessity.
+
+For now please create a directory called `docker` somewhere on your machine. Inside that folder create another directory called `episodes`. Next you need to add a system environment variable `OPENEASE_EPISODE_DATA` which contains the path to the `episodes`-directory.
+
+On Linux, open the `.bashrc` file and add the following line to the end:
+
+```
+export OPENEASE_EPISODE_DATA="< system path to this directory >/docker/episodes/"
+```
+
+Now either open a new terminal or if you had one opened already, execute the following command to reload the `.bashrc`:
+
+```
+source ~/.bashrc
+```
+
+As of right now we have not yet tested whether this works on Windows as well. We assume simply adding the environment variable in your system settings should do the job. If there are problems, please consider creating an issue or contacting us.
+
+**Side Note:** Though not needed in any way for the development of the web server, if you want to download episodic memory data, you can do so as shown [here](http://www.knowrob.org/doc/docker#setting_up_experiment_logs). But be wary that around 40GB of disk space is needed for all episodic memory data.
+
+Now to build and start the project (in detached mode mind you) run the following command in the root directory of the project:
 
 ```
 docker-compose up -d
 ``` 
 
-On consecutive executions the same command will just start up the containers of the images (given that the images are not deleted). Unfortunately as of right now, the build might take a while (~20 min), as some of the required images are quite large (mainly the openease-flask image). We are working to reduce their sizes and the build time, but for now it unfortunately is what it is.
+On consecutive executions the same command will just start up the containers of the images (given that the images are not deleted). Unfortunately as of right now, the build might take a while (~10-20 min), as some of the required images are quite large. We are working to reduce their sizes and the build time, but for now it unfortunately is what it is.
 
 After the build was successful, use the following command to see which containers are currently running:
 
