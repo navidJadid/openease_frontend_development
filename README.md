@@ -87,8 +87,6 @@ This project requires the use of:
 1. `docker` ([docker distributions and installation guides for different OS](https://docs.docker.com/install/))
 2. `docker-compose` ([installation guide](https://docs.docker.com/compose/install/)).
 
-**Side note**: Once again, many of the following actions can be performed from inside current versions of JetBrains-IDEs (and probably other IDEs as well) if you want to avoid the command line.
-
 First it is necessary to create an 'episodes'-folder on your machine and set an environment variable pointing to it. This is needed, because some module in the open-EASE project requires such a folder to exist, otherwise the build will not complete. Again, we know this an inconvenience and we are working to have the project work without this necessity.
 
 For now please create a directory called `docker` somewhere on your machine. Inside that folder create another directory called `episodes`. Next you need to add a system environment variable `OPENEASE_EPISODE_DATA` which contains the path to the `episodes`-directory.
