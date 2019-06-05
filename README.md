@@ -121,11 +121,13 @@ After the build was successful, use the following command to see which container
 docker-compose ps
 ```
 
-To stop the container execute the following command:
+To stop and remove all the container execute the following command:
 
 ```
 docker-compose down
 ```
+
+Alternatively run the `start` or `stop` command to start or stop the containers without removing them. For more information on `docker-compose` please refer to the source linked in [²].
 
 Docker will not rebuild images automatically when code is changed. It will only reconfigure (which is not the same as build) the image if the `dockerfile` or the `docker-compose` were changed. To rebuild existing images, execute either of the following two commands:
 
@@ -139,7 +141,7 @@ or
 docker-compose up -d --build
 ```
 
-For more information on `docker-compose` check the [documentation](https://docs.docker.com/compose/overview/).
+[²] For more information on `docker-compose` check the [documentation](https://docs.docker.com/compose/overview/).
 
 ##### 5. Development procedure
 
