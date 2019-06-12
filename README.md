@@ -60,7 +60,7 @@ If this repository is cloned normally, then the submodules will not be cloned to
 ##### 3. Working with the repository correctly
 Pushing and pulling changes from the main repository works as usual. So let's see how to do the same for the submodules:
 
-<sub>**Side note**: As of version 2019.1 on, most or all JetBrains IDEs (and maybe other IDEs too) support git-submodules and the following actions natively from the IDE (if you want to avoid the command line) in the early acces program (EAP). Unfortunately cloning the project with submodules over the IDE does not work yet, but is said to be added in the future.
+<sub>**Side note**: As of version 2019.1 on, most or all JetBrains IDEs (and maybe other IDEs too) support git-submodules and the following actions natively from the IDE (if you want to avoid the command line).
 This project is not sponsored by JetBrains, we just want to mention this for user convenience.</sub>
 
 1. For updating **all** the submodules from the main repository, run this command in the root directory of the repository:
