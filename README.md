@@ -60,7 +60,7 @@ If this repository is cloned normally, then the submodules will not be cloned to
 ##### 3. Working with the repository correctly
 Pushing and pulling changes from the main repository works as usual. So let's see how to do the same for the submodules:
 
-<sub><sup>**Side note**: As of version 2019.1 on, most or all JetBrains IDEs (and maybe other IDEs too) support git-submodules and the following actions natively from the IDE (if you want to avoid the command line). This project is not sponsored by JetBrains, we just want to mention this for user convenience.</sup></sub>
+<sub>**Side note**: As of version 2019.1 on, most or all JetBrains IDEs (and maybe other IDEs too) support git-submodules and the following actions natively from the IDE (if you want to avoid the command line). This project is not sponsored by JetBrains, we just want to mention this for user convenience.</sub>
 
 1. For updating **all** the submodules from the main repository, run this command in the root directory of the repository:
 
@@ -80,7 +80,7 @@ Pushing and pulling changes from the main repository works as usual. So let's se
 
     Again, if you want to manually push for each submodule and check for each push from the main repository if there are changes in the submodules before pushing, see the documentation linked in [¹].
 
-<sub><sup>[¹]: We strongly recommend reading through the [git-submodules documentation](https://git-scm.com/book/en/v2/Git-Tools-Submodules) once, as this project's documentation cannot touch on all the problems that might occur when using git-submodules. Among other things, it covers how to set the branches to update from for the submodules in `.gitmodules`, how to display changes of the submodules when calling `git diff` in the main repository, how to avoid overwriting local changes when updating submodules and how to merge changes in the submodules.</sup></sub>
+<sub>[¹]: We strongly recommend reading through the [git-submodules documentation](https://git-scm.com/book/en/v2/Git-Tools-Submodules) once, as this project's documentation cannot touch on all the problems that might occur when using git-submodules. Among other things, it covers how to set the branches to update from for the submodules in `.gitmodules`, how to display changes of the submodules when calling `git diff` in the main repository, how to avoid overwriting local changes when updating submodules and how to merge changes in the submodules.</sub>
 
 ##### 4. Building and running the whole thing
 This project requires the use of:
@@ -103,7 +103,7 @@ as well as the following line:
 export OPENEASE_WEBSERVER_DEV="< system path to root of this repository >"
 ```
 
-<sub><sup>**Side Note:** See [this link](https://www.rc.fas.harvard.edu/resources/documentation/editing-your-bashrc/) on how to edit the `.bashrc`-file with the `nano`-editor or any other editor of your choice.</sup></sub>
+<sub>**Side Note:** See [this link](https://www.rc.fas.harvard.edu/resources/documentation/editing-your-bashrc/) on how to edit the `.bashrc`-file with the `nano`-editor or any other editor of your choice.</sub>
 
 Now either open a new terminal or if you had one opened already, execute the following command to reload the `.bashrc`:
 
@@ -113,10 +113,10 @@ source ~/.bashrc
 
 As of right now we have not yet tested whether this works on Windows as well. We assume simply adding the environment variables in your system settings should do the job. If there are problems, please consider creating an issue or contacting us.
 
-<sub><sup>**Side Note:** Though not needed in any way for the development of the web server, if you want to download episodic memory data, you can do so as shown [here](http://www.knowrob.org/doc/docker#setting_up_experiment_logs). But be wary that around 40GB of disk space is needed for all episodic memory data.</sup></sub>
+<sub>**Side Note:** Though not needed in any way for the development of the web server, if you want to download episodic memory data, you can do so as shown [here](http://www.knowrob.org/doc/docker#setting_up_experiment_logs). But be wary that around 40GB of disk space is needed for all episodic memory data.</sub>
 
-<sub><sup>**Side Note:** For the following it is not possible to use the integrated Docker-functionalities of JetBrain IDEs (at least on Linux). This is due to the IDE not loading the environment variables which we define in `.bashrc`. Thus the `docker-compose` build will throw an error, because he cannot the access those environment variables.
- If you want to use the JetBrains IDE Docker-functionalities, the work around is to start the IDE from the command line which will cause it to have all the environment variables defined in `.bashrc`. For convenience you can setup an alias for the IDE.</sup></sub>
+<sub>**Side Note:** For the following it is not possible to use the integrated Docker-functionalities of JetBrain IDEs (at least on Linux). This is due to the IDE not loading the environment variables which we define in `.bashrc`. Thus the `docker-compose` build will throw an error, because he cannot the access those environment variables.
+ If you want to use the JetBrains IDE Docker-functionalities, the work around is to start the IDE from the command line which will cause it to have all the environment variables defined in `.bashrc`. For convenience you can setup an alias for the IDE.</sub>
 
 Now to build and start the project (in detached mode mind you) run the following command in the root directory of the project:
 
@@ -152,7 +152,7 @@ or
 docker-compose up -d --build
 ```
 
-<sub><sup>[²] For more information on `docker-compose` check the [documentation](https://docs.docker.com/compose/overview/).</sup></sub>
+<sub>[²] For more information on `docker-compose` check the [documentation](https://docs.docker.com/compose/overview/).</sub>
 
 ##### 5. Development procedure
 Depending on what part of the project you want to change.
