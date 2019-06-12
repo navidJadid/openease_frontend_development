@@ -133,6 +133,8 @@ After the build was successful, use the following command to see which container
 docker-compose ps
 ```
 
+Now if you open a web browser of your choice and go to `localhost:5000` the web-interface should open and you can register and login. Just remember that if the `postgres-volume` is removed, the login data will be removed with it and it will be necessary to register again.
+
 To stop and remove all the container execute the following command:
 
 ```
@@ -156,4 +158,39 @@ docker-compose up -d --build
 <sub>[²] For more information on `docker-compose` check the [documentation](https://docs.docker.com/compose/overview/).</sub>
 
 ##### 5. Development procedure
-Depending on what part of the project you want to change.
+There are different approaches, depending on what part of the project you want to change:
+
+- **CSS**:  
+CSS code can be edited while the container is running, as its `volume` is set up as a `bind-mount` in `docker`. Save the edited file and refresh the page in the web browser. You should now be able to see the changes on the page.  
+If that does not work, try a refresh with deleting the cache. In most browsers this can be done by pressing `ctrl` + `shift` + `r`.  
+It is also possible to disable caching in the developer tools of the web browser, [this link](https://www.scorchsoft.com/blog/force-chrome-clear-cache/) shows an example for Chrome, but please refer to the documentation of the browser which you are using.
+
+- **JavaScript**:  
+Basically JavaScript files can be edited like the CSS files, because the `volume` is a `bind-mount` as well. But this will not directly translate into changes like with the CSS, because those are not the files which are referenced by the web page. Instead an `openease.js` is built when the image is created via `npm`-scripts. To rebuild the file while the containers are running, we first have to jump into the container which contains the `index.js` and the `package.json` which should be inside the `openease` container (unless changes were made to the `docker-compose.yml`). To do that, open a terminal and execute the following command:
+
+    ```
+    docker exec -it openease bash
+    ```
+    
+    Next we have to go to the directory with the `package.json`, which is in `/opt/webapp/webrob/static` which can be done with:
+    
+    ```
+    cd /opt/webapp/webrob/static
+    ```
+    
+    Finally, to rebuild the mentioned file just run:
+    
+    ```
+    npm build
+    ```
+    
+    If you refresh the web page, the new file should be loaded.
+
+**// TODO**
+- **Python**:  
+**In the works...**  
+If possible, move files to `bind-mount` as well to have them as live edit.
+
+- **Postgres-DB**:
+In the works...   
+This one is tricky. If stuff for the `postgres`-container is changed, the container has to be rebuilt. We are working on a different solution...
