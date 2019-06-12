@@ -104,6 +104,14 @@ services:
       - postgres
       - dockerbridge
       - mongo
+      # only for development with PyCharm
+      - openease_css
+      - nginx
+      - dockergen
+      - secret_init
+      - openease_core
+      - chart_vis
+      - marker_vis
     volumes:
       - secret:/etc/ease_secret:ro
       - lft:/tmp/openEASE/dockerbridge
@@ -174,8 +182,18 @@ volumes:
   nginx:
   # openEASE CSS code
   openease_css:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: ${OPENEASE_WEBSERVER_DEV}/openease_css
   # openEASE JS code
   openease_core:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: ${OPENEASE_WEBSERVER_DEV}/openease_js
   # openEASE D3/THREEJS code
   chart_vis:  # TODO: use multirepo instead
   marker_vis: # TODO: use multirepo instead
