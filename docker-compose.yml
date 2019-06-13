@@ -105,13 +105,13 @@ services:
       - dockerbridge
       - mongo
       # only for development with PyCharm
-      - openease_css
-      - nginx
-      - dockergen
-      - secret_init
-      - openease_core
-      - chart_vis
-      - marker_vis
+      # - openease_css
+      # - nginx
+      # - dockergen
+      # - secret_init
+      # - openease_core
+      # - chart_vis
+      # - marker_vis
     volumes:
       - secret:/etc/ease_secret:ro
       - lft:/tmp/openEASE/dockerbridge
@@ -121,11 +121,22 @@ services:
       - marker_vis:/opt/webapp/webrob/static/lib/vis  # TODO: use multirepo instead
       - episodes_data:/episodes                       # TODO: use multirepo instead
       - meshes:/home/ros/mesh_data                    # TODO: use multirepo instead
+      - openease_html:/opt/webapp/webrob/templates
+      - openease_icons:/opt/webapp/webrob/static/icons
+      - openease_images:/opt/webapp/webrob/static/images
+      - openease_logos:/opt/webapp/webrob/static/logos
+      - openease_python_config:/opt/webapp/webrob/config
+      - openease_python_docker:/opt/webapp/webrob/docker
+      - openease_python_models:/opt/webapp/webrob/models
+      - openease_python_pages:/opt/webapp/webrob/pages
+      - openease_python_startup:/opt/webapp/webrob/startup
+      - openease_python_test:/opt/webapp/webrob/test
+      - openease_python_utility:/opt/webapp/webrob/utility
     environment:
       # these are for docker-gen to recognize this container
       - VIRTUAL_HOST=openease
       - VIRTUAL_PORT=5000
-      - EASE_DEBUG=false
+      - EASE_DEBUG=true
       # Workaround for container using legacy Docker links
       - POSTGRES_PORT_5432_TCP_ADDR=postgres
       - POSTGRES_PORT_5432_TCP_PORT=5432
@@ -187,6 +198,75 @@ volumes:
       type: 'none'
       o: 'bind'
       device: ${OPENEASE_WEBSERVER_DEV}/openease_css
+  # openEASE HTML code
+  openease_html:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: ${OPENEASE_WEBSERVER_DEV}/openease_flask/webrob/templates
+  # openEASE icons, images and logos
+  openease_icons:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: ${OPENEASE_WEBSERVER_DEV}/openease_flask/webrob/static/icons
+  openease_images:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: ${OPENEASE_WEBSERVER_DEV}/openease_flask/webrob/static/images
+  openease_logos:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: ${OPENEASE_WEBSERVER_DEV}/openease_flask/webrob/static/logos
+  # openEASE python modules
+  openease_python_config:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: ${OPENEASE_WEBSERVER_DEV}/openease_flask/webrob/config
+  openease_python_docker:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: ${OPENEASE_WEBSERVER_DEV}/openease_flask/webrob/docker
+  openease_python_models:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: ${OPENEASE_WEBSERVER_DEV}/openease_flask/webrob/models
+  openease_python_pages:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: ${OPENEASE_WEBSERVER_DEV}/openease_flask/webrob/pages
+  openease_python_startup:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: ${OPENEASE_WEBSERVER_DEV}/openease_flask/webrob/startup
+  openease_python_test:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: ${OPENEASE_WEBSERVER_DEV}/openease_flask/webrob/test
+  openease_python_utility:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: ${OPENEASE_WEBSERVER_DEV}/openease_flask/webrob/utility
   # openEASE JS code
   openease_core:
     driver: local
