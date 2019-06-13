@@ -1,6 +1,6 @@
 # openease_webserver_development
 
-### Table of Contents
+## Table of Contents
 1. [Background and purpose of this repository](#1-background-and-purpose-of-this-repository)
 2. [Setting up and cloning the repository correctly](#2-setting-up-and-cloning-the-repository-correctly)
 3. [Working with the repository correctly](#3-working-with-the-repository-correctly)
@@ -8,12 +8,12 @@
 5. [Development procedure](#5-development-procedure)
 6. [CI & CD](#6-ci-and-cd)
 
-#### 1. Background and purpose of this repository
+### 1. Background and purpose of this repository
 As of May 2019 the openEASE project has launched with a new project architecture which splits it into several sub-repositories. Each of the sub-repositories is a docker-module which is deployed to docker-hub and then build as a whole with docker-compose in the root repository. This kind of architecture will hopefully increase the project's maintainability and ease the development of new features for the project, both for the researchers at the University of Bremen but also externals. Yet, as a consequence of this change, some parts of the system cannot be run or tested standalone anymore. This repository aims to setup a development environment for the front-end and webserver. It contains all the submodules and instructions needed to run and develop the mentioned components.
 
 <sub>**Side Note:** We are aware that some of the procedures needed to work on this project are a bit 'annoying' or 'unhandy' (to say the least). We are constantly looking for ways to improve the setup procedure and the development flow, hence if you have suggestions consider writing us an email or editing this documentation and submitting a pull request.</sub>
 
-#### 2. Setting up and cloning the repository correctly
+### 2. Setting up and cloning the repository correctly
 This repository utilizes git-submodules which allows us to include and develop the dependencies of this project, without having to include their files directly into this git-repository. When cloning this project correctly (which we will explain in a minute) the submodules are cloned from their own repositories. Now when changes are made to the submodules they are only pushed to the repository of the respective module and not to this repository.
 
 If this repository is cloned normally, then the submodules will not be cloned together with the main repository. There will be subfolders, but those will be empty. Now depending on whether you have write access to the repositories in use here (meaning this repository and all the repositories of the submodules), the workflow is slightly different:
@@ -60,7 +60,7 @@ If this repository is cloned normally, then the submodules will not be cloned to
      
      As implied above, you do not need to fork all the submodules if you do not want to develop them. In that case those will just have a downstream from our repositories, but remember: since you do not have write access you will not have upstream for those respective repositories.
 
-#### 3. Working with the repository correctly
+### 3. Working with the repository correctly
 Pushing and pulling changes from the main repository works as usual. So let's see how to do the same for the submodules:
 
 **IMPORTANT!!!** First of all, go into the directory of each of the submodules in a terminal and execute to the following command:
@@ -96,7 +96,7 @@ This project is not sponsored by JetBrains, we just want to mention this for use
 
 <sub>[¹]: We strongly recommend reading through the [git-submodules documentation](https://git-scm.com/book/en/v2/Git-Tools-Submodules) once, as this project's documentation cannot touch on all the problems that might occur when using git-submodules. Among other things, it covers how to set the branches to update from for the submodules in `.gitmodules`, how to display changes of the submodules when calling `git diff` in the main repository, how to avoid overwriting local changes when updating submodules and how to merge changes in the submodules.</sub>
 
-#### 4. Building and running the whole thing
+### 4. Building and running the whole thing
 This project requires the use of:
 1. `docker` ([docker distributions and installation guides for different OS](https://docs.docker.com/install/))
 2. `docker-compose` ([installation guide](https://docs.docker.com/compose/install/)).
@@ -129,7 +129,7 @@ As of right now we have not yet tested whether this works on Windows as well. We
 
 <sub>**Side Note:** Though not needed in any way for the development of the web server, if you want to download episodic memory data, you can do so as shown [here](http://www.knowrob.org/doc/docker#setting_up_experiment_logs). But be wary that around 40GB of disk space is needed for all episodic memory data.</sub>
 
-<sub>**Side Note:** For the following it is not possible to use the integrated Docker-functionalities of JetBrain IDEs (at least on Linux). This is due to the IDE not loading the environment variables which we define in `.bashrc`. Thus the `docker-compose` build will throw an error, because he cannot the access those environment variables.
+<sub>**Side Note:** For the following it is not possible to use the integrated Docker-functionalities of JetBrain IDEs (at least on Linux). This is due to the IDE not loading the environment variables which we define in `.bashrc`. Thus the `docker-compose` build will throw an error, because it cannot the access those environment variables.
  If you want to use the JetBrains IDE Docker-functionalities, the work around is to start the IDE from the command line which will cause it to have all the environment variables defined in `.bashrc`. For convenience you can setup an alias for the IDE.</sub>
 
 Now to build and start the project (in detached mode mind you) run the following command in the root directory of the project:
@@ -170,8 +170,8 @@ docker-compose up -d --build
 
 <sub>[²] For more information on `docker-compose` check the [documentation](https://docs.docker.com/compose/overview/).</sub>
 
-#### 5. Development procedure
-There are different approaches, depending on what part of the project you want to change. It should be possible to change most files while the project is running in `docker-compose` and see results with a refresh of the web browser. This works because most container `volumes` are set up as `bind-mounts` in `docker`. As a result please take notice that moving files out of the specified locations might cause `docker` to not find them anymore. Additionally for certain files, additional steps need to be taken (unfortunately) e.g. sometimes containers need to be rebuilt to see changes. Let's now see which approach to use for what part of the project:
+### 5. Development procedure
+There are different approaches, depending on what part of the project you want to change. It should be possible to change most files while the project is running in `docker-compose` and see results with a refresh of the page in the web browser. This works because most container `volumes` are set up as `bind-mounts` in `docker`. As a result please take notice that moving files out of the specified locations might cause `docker` to not find them anymore. Additionally for certain files, additional steps need to be taken (unfortunately) e.g. sometimes containers need to be rebuilt to see changes. Let's now see which approach to use for what part of the project:
 
 - **UI, i.e. HTML, CSS, images, icons and logos**:  
     - **HTML**  
@@ -212,7 +212,7 @@ There are different approaches, depending on what part of the project you want t
 If possible, move files to `bind-mount` as well to have them as live edit.
 
 - **Postgres-DB**:  
-If code for the `postgres`-container is changed, the container has to be rebuilt.
+If code for the `postgres`-container is changed, the `postgres`-container has to be rebuilt.
 
-#### 6. CI and CD
+### 6. CI and CD
 Coming soon...
