@@ -6,14 +6,17 @@
 3. [Working with the repository correctly](#3-working-with-the-repository-correctly)
 4. [Building and running the whole thing](#4-building-and-running-the-whole-thing)
 5. [Development procedure](#5-development-procedure)
+6. [CI & CD](#6-ci-and-cd)
 
-##### 1. Background and purpose of this repository
+#### 1. Background and purpose of this repository
 As of May 2019 the openEASE project has launched with a new project architecture which splits it into several sub-repositories. Each of the sub-repositories is a docker-module which is deployed to docker-hub and then build as a whole with docker-compose in the root repository. This kind of architecture will hopefully increase the project's maintainability and ease the development of new features for the project, both for the researchers at the University of Bremen but also externals. Yet, as a consequence of this change, some parts of the system cannot be run or tested standalone anymore. This repository aims to setup a development environment for the front-end and webserver. It contains all the submodules and instructions needed to run and develop the mentioned components.
 
-##### 2. Setting up and cloning the repository correctly
+<sub>**Side Note:** We are aware that some of the procedures needed to work on this project are a bit 'annoying' or 'unhandy' (to say the least). We are constantly looking for ways to improve the setup procedure and the development flow, hence if you have suggestions consider writing us an email or editing this documentation and submitting a pull request.</sub>
+
+#### 2. Setting up and cloning the repository correctly
 This repository utilizes git-submodules which allows us to include and develop the dependencies of this project, without having to include their files directly into this git-repository. When cloning this project correctly (which we will explain in a minute) the submodules are cloned from their own repositories. Now when changes are made to the submodules they are only pushed to the repository of the respective module and not to this repository.
 
-If this repository is cloned normally, then the submodules will not be cloned together with the main repository. There will be subfolders, but those will be empty. Now depending on whether you have write access to the repositories in use here (meaning this repository and all the repositories of the sub-modules), the workflow is slightly different:
+If this repository is cloned normally, then the submodules will not be cloned together with the main repository. There will be subfolders, but those will be empty. Now depending on whether you have write access to the repositories in use here (meaning this repository and all the repositories of the submodules), the workflow is slightly different:
 
 - **If you have write access to all the repositories in use** or just want to run the project and not commit changes:  
     To load the repository with all submodules either of the following two approaches will work:
@@ -57,21 +60,31 @@ If this repository is cloned normally, then the submodules will not be cloned to
      
      As implied above, you do not need to fork all the submodules if you do not want to develop them. In that case those will just have a downstream from our repositories, but remember: since you do not have write access you will not have upstream for those respective repositories.
 
-##### 3. Working with the repository correctly
+#### 3. Working with the repository correctly
 Pushing and pulling changes from the main repository works as usual. So let's see how to do the same for the submodules:
 
-<sub>**Side note**: As of version 2019.1 on, most or all JetBrains IDEs (and maybe other IDEs too) support git-submodules and the following actions natively from the IDE (if you want to avoid the command line).
+**IMPORTANT!!!** First of all, go into the directory of each of the submodules in a terminal and execute to the following command:
+
+```
+git checkout master
+```
+
+You could also pick any branch of your choice. But be aware that without this step pushing changes might not work, at least it did not for us. Also when working with multiple people on the submodules, there might be problems when committing. When working alone on your fork of the project there should not be any problems though. We are still looking into those matters and will update the project and documentation as soon as we have found solutions.
+
+<sub>**Side note**: As of version 2019.1 on, most or all JetBrains IDEs (and maybe other IDEs too) support git-submodules and many (but not all) of the following actions natively from the IDE (if you want to avoid the command line).
 This project is not sponsored by JetBrains, we just want to mention this for user convenience.</sub>
 
-1. For updating **all** the submodules from the main repository, run this command in the root directory of the repository:
+1. **Updating Submodules**  
+    For updating **all** the submodules from the main repository, run this command in the root directory of the repository:
 
     ```
     git submodule update --remote
     ```
+    
+    Due to our previous setup this will update from the master branch of the respective repositories. If you want to update from a different branch or only update specific modules, see the git-submodules documentation[¹]. The link in the footnote also covers how to avoid overwriting local changes when updating the submodules. This will likely happen, because on default the submodules will be be run in detached HEAD state by git (if the `checkout branch` is not set). Basically the solution involves checking out a specific branch for each submodule, but please refer to the mentioned documentation for a more in-depth explanation.
 
-    This however assumes that you want to update from the master branch of the respective repositories. If you want to update from a different branch or only update specific modules, see the git-submodules documentation[¹]. The link in the footnote also covers **how to avoid overwriting local changes** when updating the submodules. This will likely happen, because on default the submodules will be be run in detached HEAD state by git. Basically the solution involves checking out a specific branch for each submodule, but please refer to the mentioned documentation for a more in-depth explanation.
-
-2. For committing changes in projects with submodules it is usually best to first commit the changes in the submodules. This is because there may be changes in the main project which depend on the changes in the submodules and if those are not pushed prior the main repository will reference an old state of the submodule. Luckily git provides the following command: 
+2. **Committing and pushing changes**  
+    For committing changes in projects with submodules it is usually best to first commit the changes in the submodules. This is because there may be changes in the main project which depend on the changes in the submodules and if those are not pushed prior the main repository will reference an old state of the submodule. Luckily git provides the following command: 
 
     ```
     git push --recurse-submodules=on-demand
@@ -83,7 +96,7 @@ This project is not sponsored by JetBrains, we just want to mention this for use
 
 <sub>[¹]: We strongly recommend reading through the [git-submodules documentation](https://git-scm.com/book/en/v2/Git-Tools-Submodules) once, as this project's documentation cannot touch on all the problems that might occur when using git-submodules. Among other things, it covers how to set the branches to update from for the submodules in `.gitmodules`, how to display changes of the submodules when calling `git diff` in the main repository, how to avoid overwriting local changes when updating submodules and how to merge changes in the submodules.</sub>
 
-##### 4. Building and running the whole thing
+#### 4. Building and running the whole thing
 This project requires the use of:
 1. `docker` ([docker distributions and installation guides for different OS](https://docs.docker.com/install/))
 2. `docker-compose` ([installation guide](https://docs.docker.com/compose/install/)).
@@ -157,16 +170,24 @@ docker-compose up -d --build
 
 <sub>[²] For more information on `docker-compose` check the [documentation](https://docs.docker.com/compose/overview/).</sub>
 
-##### 5. Development procedure
-There are different approaches, depending on what part of the project you want to change:
+#### 5. Development procedure
+There are different approaches, depending on what part of the project you want to change. It should be possible to change most files while the project is running in `docker-compose` and see results with a refresh of the web browser. This works because most container `volumes` are set up as `bind-mounts` in `docker`. As a result please take notice that moving files out of the specified locations might cause `docker` to not find them anymore. Additionally for certain files, additional steps need to be taken (unfortunately) e.g. sometimes containers need to be rebuilt to see changes. Let's now see which approach to use for what part of the project:
 
-- **CSS**:  
-CSS code can be edited while the container is running, as its `volume` is set up as a `bind-mount` in `docker`. Save the edited file and refresh the page in the web browser. You should now be able to see the changes on the page.  
-If that does not work, try a refresh with deleting the cache. In most browsers this can be done by pressing `ctrl` + `shift` + `r`.  
-It is also possible to disable caching in the developer tools of the web browser, [this link](https://www.scorchsoft.com/blog/force-chrome-clear-cache/) shows an example for Chrome, but please refer to the documentation of the browser which you are using.
+- **UI, i.e. HTML, CSS, images, icons and logos**:  
+    - **HTML**  
+    HTML (template-)files can be found in `openease_falsk/webrob/templates`. Saved changes will show upon a page refresh in the web browser.
+    
+        Be aware that if you change the `EASE_DEBUG` variable in the `docker-compose.yml` to `false` the changes might not show up anymore on refresh. This is because changing the variable will cause the server to not run in debug mode anymore which leads to caching or something alike from the [`flask`-framework](http://flask.pocoo.org/). Actually we are not sure exactly why, so if you do, let us now.
+
+    - **CSS**  
+    CSS code can be found in the `openease_css`-submodule. Saved changes should appear with a refresh of the page in the web browser with clearing the cache. This can be performed by pressing `ctrl` + `shift` + `r`. A normal page refresh might not work, because web browser tend to cache images and css-files (among other files) for performance.
+    It is also possible to disable caching in the developer tools of most current web browsers. [This link](https://stackoverflow.com/questions/5690269/disabling-chrome-cache-for-website-development) shows an example for Chrome, but please refer to the documentation of the browser which you are using. In the case of Chrome the developer tools need to remain open for this setting to work.
+
+    - **images, icons and logos**  
+    These files can be found in `openease_falsk/webrob/static/<respective folder>`. Like the CSS code, these files can be changed or replaced and upon a refresh with clearing the cache changes should appear.
 
 - **JavaScript**:  
-Basically JavaScript files can be edited like the CSS files, because the `volume` is a `bind-mount` as well. But this will not directly translate into changes like with the CSS, because those are not the files which are referenced by the web page. Instead an `openease.js` is built when the image is created via `npm`-scripts. To rebuild the file while the containers are running, we first have to jump into the container which contains the `index.js` and the `package.json` which should be inside the `openease` container (unless changes were made to the `docker-compose.yml`). To do that, open a terminal and execute the following command:
+**// TODO** Basically JavaScript files can be edited like the CSS files, because the `volume` is a `bind-mount` as well. But this will not directly translate into changes like with the CSS, because those are not the files which are referenced by the web page. Instead an `openease.js` is built when the image is created via `npm`-scripts. To rebuild the file while the containers are running, we first have to jump into the container which contains the `index.js` and the `package.json` which should be inside the `openease` container (unless changes were made to the `docker-compose.yml`). To do that, open a terminal and execute the following command:
 
     ```
     docker exec -it openease bash
@@ -186,11 +207,12 @@ Basically JavaScript files can be edited like the CSS files, because the `volume
     
     If you refresh the web page, the new file should be loaded.
 
-**// TODO**
 - **Python**:  
-**In the works...**  
+**// TODO**
 If possible, move files to `bind-mount` as well to have them as live edit.
 
-- **Postgres-DB**:
-In the works...   
-This one is tricky. If stuff for the `postgres`-container is changed, the container has to be rebuilt. We are working on a different solution...
+- **Postgres-DB**:  
+If code for the `postgres`-container is changed, the container has to be rebuilt.
+
+#### 6. CI and CD
+Coming soon...
