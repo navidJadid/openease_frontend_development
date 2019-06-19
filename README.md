@@ -187,29 +187,51 @@ There are different approaches, depending on what part of the project you want t
     These files can be found in `openease_falsk/webrob/static/<respective folder>`. Like the CSS code, these files can be changed or replaced and upon a refresh with clearing the cache changes should appear.
 
 - **JavaScript**:  
-**// TODO** Basically JavaScript files can be edited like the CSS files, because the `volume` is a `bind-mount` as well. But this will not directly translate into changes like with the CSS, because those are not the files which are referenced by the web page. Instead an `openease.js` is built when the image is created via `npm`-scripts. To rebuild the file while the containers are running, we first have to jump into the container which contains the `index.js` and the `package.json` which should be inside the `openease` container (unless changes were made to the `docker-compose.yml`). To do that, open a terminal and execute the following command:
-
-    ```
-    docker exec -it openease bash
-    ```
+Depending on which files you would like to work on, the approach is a little different:
+    - **JavaScript-files which are directly linked in the HTML-files**:  
+    These JavaScript-files basically can be edited like the HTML- and CSS-files, because the `volume` is a `bind-mount` as well. Save the file and refresh the page to see the changes take place.
     
-    Next we have to go to the directory with the `package.json`, which is in `/opt/webapp/webrob/static` which can be done with:
+    - **JavaScript-files which are modules for openease.js**:
+    Even though these files are located inside the bind mount, they are not directly referenced by the HTML-pages and are instead used as modules for the mentioned `openease.js`. Therefore this will not directly translate into changes like with the CSS, because those are not the files which are referenced by the web page. Instead an `openease.js` is built when the image is created via `npm`-scripts. To rebuild the file while the containers are running, we first have to jump into the container which contains the `index.js` and the `package.json` which should be inside the `openease` container (unless changes were made to the `docker-compose.yml`). To do that, open a (separate) terminal and execute the following command:
     
-    ```
-    cd /opt/webapp/webrob/static
-    ```
-    
-    Finally, to rebuild the mentioned file just run:
-    
-    ```
-    npm build
-    ```
-    
-    If you refresh the web page, the new file should be loaded.
+        ```
+        docker exec -it openease bash
+        ```
+        
+        Next we have to go to the directory `/tmp/npm`, which can be done with:
+        
+        ```
+        cd /tmp/npm
+        ```
+        
+        To rebuild the mentioned file just run:
+        
+        ```
+        npm run build
+        ```
+        
+        Lastly we have to move the built file to the location of the old file:
+        
+        ```
+        mv /tmp/npm/openease*.js /opt/webapp/webrob/static/    
+        ```
+        
+        After a refresh of the web page, the new file should be loaded. Note that `index.js` cannot be changed without rebuilding the container and volume, because the file is not located inside the `bind-mounts`. If you are already in the `/tmp/npm`-folder and would like to execute both commands in one line, you can just link the commands with `&&`:
+        
+        ```
+        npm run build && mv /tmp/npm/openease*.js /opt/webapp/webrob/static/    
+        ```
+        
+        As of right now, this is still untested, as we could not find any modules in this project which are directly referenced by `openease.js`. So if you run into issues, please make sure to let us now either via e-mail or by submitting an issue.
 
 - **Python**:  
-**// TODO**
-If possible, move files to `bind-mount` as well to have them as live edit.
+Working with these files is a bit cumbersome for now. Basically on each change the container containing the webserver has to be restarted. This can simply be done by:
+
+    ```
+    docker restart openease
+    ```
+    
+    This might take ~10-20 seconds, depending on your machine. We are working to find a better solution, like restarting the python-script or something alike. If you have suggestions, please feel free to let us know via e-mail or pull-request.
 
 - **Postgres-DB**:  
 If code for the `postgres`-container is changed, the container has to be rebuilt.
