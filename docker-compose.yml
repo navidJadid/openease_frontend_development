@@ -11,7 +11,7 @@ services:
     volumes:
       - nginx:/etc/nginx/conf.d
       - ./certs:/etc/nginx/certs
-    # FIXME: For some reason this is required now, else nginx uns
+    # FIXME: For some reason this is required now, else nginx runs
     #        into timeouts when talking to ROS.
     network_mode: "host"
   
