@@ -222,6 +222,9 @@ Depending on which files you would like to work on, the approach is a little dif
         npm run build && mv /tmp/npm/openease*.js /opt/webapp/webrob/static/    
         ```
         
+        **IMPORTANT**:
+        When deleting the container and starting a new one, the old `openease.js` is loaded. This is due to fact that `openease.js` is built within the `Dockerfile`-script. Hence it is necessary to rebuild the `openease`-image to have the new `openease.js` in new containers.
+        
         As of right now, this is still untested, as we could not find any modules in this project which are directly referenced by `openease.js`. So if you run into issues, please make sure to let us now either via e-mail or by submitting an issue.
 
 - **Python**:  
