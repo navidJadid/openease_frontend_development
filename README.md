@@ -175,12 +175,9 @@ There are different approaches, depending on what part of the project you want t
 
 - **UI, i.e. HTML, CSS, images, icons and logos**:  
     - **HTML**  
-    HTML (template-)files can be found in `openease_falsk/webrob/templates`. Saved changes will show upon a page refresh in the web browser.
+    HTML (template-)files can be found in `openease_falsk/webrob/templates`. Saved changes unfortunately will not show upon a page refresh in the web browser. After saving the changes, execute `docker restart <name of your openease-flask container>` to show changes. This will take around 15 seconds to restart the server, which is not ideal but better than rebuilding the container each time.         
     
-        Be aware that if you change the `EASE_DEBUG` variable in the `docker-compose.yml` to `false` the changes might not show up anymore on refresh. This is because changing the variable will cause the server to not run in debug mode anymore which leads to caching or something alike from the [`flask`-framework](http://flask.pocoo.org/). Actually we are not sure exactly why, so if you do, let us now.
-        
-        **Note:** As of right now, this does not work, because we get issues with with running the `flask`-server in debug mode. The current workaround is to set `EASE_DEBUG=false` and to execute `docker restart <name of your openease-flask container>` to show changes. This will take around 15 seconds to restart the server, so not ideal, but better than rebuilding the container each time.          
-        We are of course working to fix this, if you wanna help please consider submitting on [this stackoverflow entry]().
+        **Note:** We are working to have the underlying `flask`-server to run in debug mode so the changes will show upon a refresh. Sadly this will crash into a broken pipe error each time. We are of course working to fix this, if you wanna help please consider submitting on [this stackoverflow entry](https://stackoverflow.com/questions/56689412/why-does-flask-crash-inside-my-docker-compose-project-when-run-in-debug-mode).
 
     - **CSS**  
     CSS code can be found in the `openease_css`-submodule. Saved changes should appear with a refresh of the page in the web browser with clearing the cache. This can be performed by pressing `ctrl` + `shift` + `r`. A normal page refresh might not work, because web browser tend to cache images and css-files (among other files) for performance.
