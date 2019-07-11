@@ -1,19 +1,19 @@
 # openease_webserver_development
 
 ## Table of Contents
-1. [Background and purpose of this repository](#1-background-and-purpose-of-this-repository)
-2. [Setting up and cloning the repository correctly](#2-setting-up-and-cloning-the-repository-correctly)
-3. [Working with the repository correctly](#3-working-with-the-repository-correctly)
-4. [Building and running the whole thing](#4-building-and-running-the-whole-thing)
-5. [Development procedure](#5-development-procedure)
-6. [CI & CD](#6-ci-and-cd)
+1. [Background and Purpose of this Repository](#1-background-and-purpose-of-this-repository)
+2. [Setting Up and Cloning the Repository correctly](#2-setting-up-and-cloning-the-repository-correctly)
+3. [Working with the Repository correctly](#3-working-with-the-repository-correctly)
+4. [Building and Running the whole thing](#4-building-and-running-the-whole-thing)
+5. [Development Procedure](#5-development-procedure)
+6. [CI & CD](#6-ci--cd)
 
-### 1. Background and purpose of this repository
+### 1. Background and Purpose of this Repository
 As of May 2019 the openEASE project has launched with a new project architecture which splits it into several sub-repositories. Each of the sub-repositories is a docker-module which is deployed to docker-hub and then build as a whole with docker-compose in the root repository. This kind of architecture will hopefully increase the project's maintainability and ease the development of new features for the project, both for the researchers at the University of Bremen but also externals. Yet, as a consequence of this change, some parts of the system cannot be run or tested standalone anymore. This repository aims to setup a development environment for the front-end and webserver. It contains all the submodules and instructions needed to run and develop the mentioned components.
 
 <sub>**Side Note:** We are aware that some of the procedures needed to work on this project are a bit 'annoying' or 'unhandy' (to say the least). We are constantly looking for ways to improve the setup procedure and the development flow, hence if you have suggestions consider writing us an email or editing this documentation and submitting a pull request.</sub>
 
-### 2. Setting up and cloning the repository correctly
+### 2. Setting up and Cloning the Repository correctly
 This repository utilizes git-submodules which allows us to include and develop the dependencies of this project, without having to include their files directly into this git-repository. When cloning this project correctly (which we will explain in a minute) the submodules are cloned from their own repositories. Now when changes are made to the submodules they are only pushed to the repository of the respective module and not to this repository.
 
 If this repository is cloned normally, then the submodules will not be cloned together with the main repository. There will be subfolders, but those will be empty. Now depending on whether you have write access to the repositories in use here (meaning this repository and all the repositories of the submodules), the workflow is slightly different:
@@ -60,7 +60,7 @@ If this repository is cloned normally, then the submodules will not be cloned to
      
      As implied above, you do not need to fork all the submodules if you do not want to develop them. In that case those will just have a downstream from our repositories, but remember: since you do not have write access you will not have upstream for those respective repositories.
 
-### 3. Working with the repository correctly
+### 3. Working with the Repository correctly
 Pushing and pulling changes from the main repository works as usual. So let's see how to do the same for the submodules:
 
 **IMPORTANT!!!** First of all, go into the directory of each of the submodules in a terminal and execute to the following command:
@@ -96,7 +96,7 @@ This project is not sponsored by JetBrains, we just want to mention this for use
 
 <sub>[¹]: We strongly recommend reading through the [git-submodules documentation](https://git-scm.com/book/en/v2/Git-Tools-Submodules) once, as this project's documentation cannot touch on all the problems that might occur when using git-submodules. Among other things, it covers how to set the branches to update from for the submodules in `.gitmodules`, how to display changes of the submodules when calling `git diff` in the main repository, how to avoid overwriting local changes when updating submodules and how to merge changes in the submodules.</sub>
 
-### 4. Building and running the whole thing
+### 4. Building and Running the whole thing
 This project requires the use of:
 1. `docker` ([docker distributions and installation guides for different OS](https://docs.docker.com/install/))
 2. `docker-compose` ([installation guide](https://docs.docker.com/compose/install/)).
@@ -170,12 +170,12 @@ docker-compose up -d --build
 
 <sub>[²] For more information on `docker-compose` check the [documentation](https://docs.docker.com/compose/overview/).</sub>
 
-### 5. Development procedure
+### 5. Development Procedure
 There are different approaches, depending on what part of the project you want to change. It should be possible to change most files while the project is running in `docker-compose` and see results with a refresh of the page in the web browser. This works because most container `volumes` are set up as `bind-mounts` in `docker`. As a result please take notice that moving files out of the specified locations might cause `docker` to not find them anymore. Additionally for certain files, additional steps need to be taken (unfortunately) e.g. sometimes containers need to be rebuilt to see changes. Let's now see which approach to use for what part of the project:
 
 - **UI, i.e. HTML, CSS, images, icons and logos**:  
     - **HTML**  
-    HTML (template-)files can be found in `openease_falsk/webrob/templates`. Saved changes unfortunately will not show upon a page refresh in the web browser. After saving the changes, execute `docker restart <name of your openease-flask container>` to show changes. This will take around 15 seconds to restart the server, which is not ideal but better than rebuilding the container each time.         
+    HTML (template-)files can be found in `openease_falsk/webrob/templates`. Saved changes unfortunately will not show upon a page refresh in the web browser. After saving the changes, execute `docker restart <name of your openease-flask container>` to show changes. This will take around ~10-20 seconds to restart the server, which is not ideal but better than rebuilding the container each time.         
     
         **Note:** We are working to have the underlying `flask`-server to run in debug mode so the changes will show upon a refresh. Sadly this will crash into a broken pipe error each time. We are of course working to fix this, if you wanna help please consider submitting on [this stackoverflow entry](https://stackoverflow.com/questions/56689412/why-does-flask-crash-inside-my-docker-compose-project-when-run-in-debug-mode).
 
@@ -239,5 +239,5 @@ Working with these files is a bit cumbersome for now. Basically on each change t
 - **Postgres-DB**:  
 If code for the `postgres`-container is changed, the `postgres`-container has to be rebuilt.
 
-### 6. CI and CD
+### 6. CI & CD
 Coming soon...
