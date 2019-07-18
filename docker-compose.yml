@@ -34,6 +34,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
+      - OPENEASE_EPISODE_DATA=${OPENEASE_EPISODE_DATA}
       - EASE_DEBUG=${EASE_DEBUG}
 
   # postgres is used to store e.g. user accounts, roles,
