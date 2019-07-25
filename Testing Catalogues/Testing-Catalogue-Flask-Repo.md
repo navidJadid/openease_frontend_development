@@ -1,22 +1,24 @@
 # TESTING-CATALOGUE Flask-Repository
-This file contains a checklist of directories and modules in this repository which still need to be tested. We will rank them on a scale from ![one][one_16] to ![five][five_16] for the degree of difficulty for testing. Please add the ![green_check][green_check_16] icon behind every module that has been tested, and the ![black_check][black_check_16] icon behind every tested method.  
-If a module or method does not need testing, we mark it with a ![stop][stop_16] icon.
+This file contains a checklist of directories and modules in the `openease_flask`-repository which still need to be tested. We will rank them on a scale from ![one][one_16] to ![five][five_16] for the degree of difficulty for testing.
+
+Please add the ![green_check][green_check_16] icon behind every module that has been tested, and the ![black_check][black_check_16] icon behind every tested method. If a module or method does not need testing, we mark it with a ![stop][stop_16] icon.  
+(You can use test-coverage data to decide whether a method or module was tested enough.)
 
 If a module is refactored, please consider indicating the changes in this file.
 
-- ![folder][folder_16] Webrob
-    - ![folder][folder_16] config
+- ![folder][folder_16] **Webrob**
+    - ![folder][folder_16] **config**
         - ![python][python_16] settings.py ![stop][stop_16]
-    - ![folder][folder_16] docker
+    - ![folder][folder_16] **docker**
         - ![python][python_16] docker_application.py
         - ![python][python_16] docker_interface.py
-    - ![folder][folder_16] models
+    - ![folder][folder_16] **models**
         - ![python][python_16] db.py
         - ![python][python_16] experiments.py
         - ![python][python_16] teaching.py
         - ![python][python_16] tutorials.py
         - ![python][python_16] users.py
-    - ![folder][folder_16] pages
+    - ![folder][folder_16] **pages**
         - ![python][python_16] api.py
         - ![python][python_16] db.py
         - ![python][python_16] editor.py
@@ -27,11 +29,11 @@ If a module is refactored, please consider indicating the changes in this file.
         - ![python][python_16] mongo.py
         - ![python][python_16] oauth.py
         - ![python][python_16] tutorials.py
-    - ![folder][folder_16] startup
+    - ![folder][folder_16] **startup**
         - ![python][python_16] init_app.py
         - ![python][python_16] init_db.py
         - ![python][python_16] init_webapp.py
-    - ![folder][folder_16] utility
+    - ![folder][folder_16] **utility**
         - ![python][python_16] db_connection_checker.py
         - ![python][python_16] directory_handler.py
         - ![python][python_16] file_handler.py
