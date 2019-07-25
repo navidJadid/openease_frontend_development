@@ -1,5 +1,5 @@
 # TESTING-CATALOGUE Flask-Repository
-This file contains a checklist of directories and modules in the `openease_js`-repository which still need to be tested. We will rank them on a scale from ![one][one_16] to ![five][five_16] for the degree of difficulty for testing.
+This file contains a checklist of directories and modules in the `openease_js`-repository which still need to be tested. We will rank them on a scale from ![one][one_16] (easy) to ![five][five_16] (hard) for the degree of difficulty for testing.
 
 Please add the ![green_check][green_check_16] icon behind every module that has been tested, and the ![black_check][black_check_16] icon behind every tested method. If a module or method does not need testing, we mark it with a ![stop][stop_16] icon.  
 (You can use test-coverage data to decide whether a method or module was tested enough.)
