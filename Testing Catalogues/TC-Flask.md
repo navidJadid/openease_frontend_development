@@ -1,5 +1,5 @@
 # TESTING-CATALOGUE Flask-Repository
-This file contains a checklist of directories and modules in the `openease_flask`-repository which still need to be tested. We will rank them on a scale from ![one][one_16] to ![five][five_16] for the degree of difficulty for testing.
+This file contains a checklist of directories and modules in the `openease_flask`-repository which still need to be tested. We will rank them on a scale from ![one][one_16] (easy) to ![five][five_16] (hard) for the degree of difficulty for testing.
 
 Please add the ![green_check][green_check_16] icon behind every module that has been tested, and the ![black_check][black_check_16] icon behind every tested method. If a module or method does not need testing, we mark it with a ![stop][stop_16] icon.  
 (You can use test-coverage data to decide whether a method or module was tested enough.)
@@ -9,13 +9,11 @@ If a module is refactored, please consider indicating the changes in this file.
 - ![folder][folder_16] **Webrob**
     - ![folder][folder_16] **config**
         - ![python][python_16] settings.py ![stop][stop_16]
-    - ![folder][folder_16] **docker**
+    - ![folder][folder_16] **docker** ![stop][stop_16] (for now)
         - ![python][python_16] docker_application.py
-            - **TODO**
         - ![python][python_16] docker_interface.py
-            - **TODO**
     - ![folder][folder_16] **models**
-        - ![python][python_16] db.py
+        - ![python][python_16] db.py ![three][three_16]
             - `db_columns(cls)`
             - `db_column_names(cls)`
             - `db_find_all(cls)`
@@ -26,16 +24,16 @@ If a module is refactored, please consider indicating the changes in this file.
             - `db_remove(cls, i)`
             - `db_table_class(table_name)`
         - ![python][python_16] experiments.py ![stop][stop_16]
-        - ![python][python_16] teaching.py
+        - ![python][python_16] teaching.py ![three][three_16]
             - `find_courses(course)`
             - `get_exercises(course_id)`
             - `get_tasks(course_id)`
             - `get_task(exercise_id, task_number)`
-        - ![python][python_16] tutorials.py
+        - ![python][python_16] tutorials.py ![three][three_16]
             - `read_tutorial_page(cat, page)`
         - ![python][python_16] users.py ![stop][stop_16]
     - ![folder][folder_16] **pages**
-        - ![python][python_16] api.py
+        - ![python][python_16] api.py ![four][four_16]
             - `login_by_session()`
             - `_generate_rosauth(user_container_name, dest, cache=False)`
             - `refresh_by_session()`
@@ -47,7 +45,7 @@ If a module is refactored, please consider indicating the changes in this file.
             - `refresh_by_token(token)`
             - `create_api_token()`
             - `_create_token()`    
-        - ![python][python_16] db.py
+        - ![python][python_16] db.py ![four][four_16]
             - `db_docu_text(key)`
             - `_get_all_docs()`
             - `_display_warning_when_unable_to_find_docu(key)`
@@ -61,7 +59,7 @@ If a module is refactored, please consider indicating the changes in this file.
             - `db_update_route(table)`
             - `db_create_route(table)`
             - `db_remove_route(table)`
-        - ![python][python_16] editor.py
+        - ![python][python_16] editor.py ![five][five_16]
             - `handle_pkg_error(error)`
             - `render_editor(filename="")`
             - `create_new_pkg()`
@@ -102,7 +100,7 @@ If a module is refactored, please consider indicating the changes in this file.
             - `_delete_file_from_container()`
             - `_remove_file_from_user_container(path)`
             - `_log_unable_to_delete_file_error()`
-        - ![python][python_16] experiments.py
+        - ![python][python_16] experiments.py ![five][five_16]
             - `download_episode(category=None, exp=None)`
             - `upload_episode(category=None, exp=None)`
             - `download_episode_ftp(category=None, exp=None)`
@@ -123,7 +121,7 @@ If a module is refactored, please consider indicating the changes in this file.
             - `experiment_create_directory(cat, exp)`
             - `experiment_load_queries(category, exp)`
             - `experiment_save_queries(category, exp, data)`
-        - ![python][python_16] knowrob.py
+        - ![python][python_16] knowrob.py ![five][five_16]
             - `download_static(filename)`
             - `download_logged_image(filename)`
             - `transfer_logged_video(filename)`
@@ -141,7 +139,7 @@ If a module is refactored, please consider indicating the changes in this file.
             - `log()`
             - `get_history_file()`
             - `unhandled_exception(e)`
-        - ![python][python_16] login.py
+        - ![python][python_16] login.py ![four][four_16]
             - `track_login(sender, user, **extra)`
             - `track_logout(sender, user, **extra)`
             - `show_user_data()`
@@ -150,7 +148,7 @@ If a module is refactored, please consider indicating the changes in this file.
             - `_get_exp_category()`
             - `_get_exp_name()`
             - `openease_remote()`
-        - ![python][python_16] meshes.py
+        - ![python][python_16] meshes.py ![four][four_16] - ![five][five_16]
             - `is_mesh_url_valid(url)`
             - `update_meshes()`
             - `_update_meshes_run()`
@@ -170,7 +168,7 @@ If a module is refactored, please consider indicating the changes in this file.
             - `_get_m_file_from_root(mesh)`
             - `_log_download_fail_message(mesh)`
             - `_send_mesh_file(mesh_file)`
-        - ![python][python_16] mongo.py
+        - ![python][python_16] mongo.py ![five][five_16]
             - `admin_mongo()`
             - `_connect_to_mongo_db()`
             - `_get_db_and_file_info(mongo_db)`
@@ -186,7 +184,7 @@ If a module is refactored, please consider indicating the changes in this file.
             - `_drop_old_db_content(db_name)`
             - `_mongo_import_json(db_name, collection, json_file)`
             - `_mongo_import_bson(db_name, collection, bson_file)`
-        - ![python][python_16] oauth.py
+        - ![python][python_16] oauth.py ![four][four_16]
             - `tokens_are_defined(tokens)`
             - `remote_app_registered(name)`
             - `remote_app_login(remote_app, authorized)`
@@ -202,7 +200,7 @@ If a module is refactored, please consider indicating the changes in this file.
             - `facebook_authorized(response)`
             - `twitter_authorized(response)`
             - `google_authorized(response)`
-        - ![python][python_16] tutorials.py
+        - ![python][python_16] tutorials.py ![four][four_16]
             - `tutorials()`
             - `get_tutorial()`
             - `read_tutorial(cat_id, page)`
@@ -211,14 +209,14 @@ If a module is refactored, please consider indicating the changes in this file.
             - `get_task_()`
             - `teaching()`
     - ![folder][folder_16] **startup**
-        - ![python][python_16] init_app.py
+        - ![python][python_16] init_app.py ![four][four_16]
             - `add_user(app, db, user_manager, name, mail, pw, display_name='', remote_app='', roles=[])`
             - `_check_password_and_display_message_on_error(app, name, pw)`
-            - `_password_criteria_fulfilled(pw)`
-            - `_has_six_or_more_chars(str)`
-            - `_contains_number(str)`
-            - `_contains_lowercase_letter(str)`
-            - `_contains_uppercase_letter(str)`
+            - `_password_criteria_fulfilled(pw)` ![black_check][black_check_16]
+            - `_has_six_or_more_chars(str)` ![black_check][black_check_16]
+            - `_contains_number(str)` ![black_check][black_check_16]
+            - `_contains_lowercase_letter(str)` ![black_check][black_check_16]
+            - `_contains_uppercase_letter(str)` ![black_check][black_check_16]
             - `_get_user_from_db(name)`
             - `_create_new_user_and_add_to_db(app, db, user_manager, name, mail, pw, display_name, remote_app, roles)`
             - `_append_roles_to_user_object(app, user, roles)`
@@ -231,51 +229,51 @@ If a module is refactored, please consider indicating the changes in this file.
         - ![python][python_16] init_db.py ![stop][stop_16]
         - ![python][python_16] init_webapp.py ![stop][stop_16]
     - ![folder][folder_16] **utility**
-        - ![python][python_16] db_connection_checker.py
+        - ![python][python_16] db_connection_checker.py ![three][three_16]
             - `got_db_connection(app, db)`
         - ![python][python_16] directory_handler.py
-            - `mk_dir(path)`
-            - `make_dirs(path)`
-            - `rm_empty_dir(path)`
-            - `rm_nonempty_dir(path)`
-            - `ch_dir(path)`
+            - `mk_dir(path)` ![black_check][black_check_16]
+            - `make_dirs(path)` ![black_check][black_check_16]
+            - `rm_empty_dir(path)` ![black_check][black_check_16]
+            - `rm_nonempty_dir(path)` ![black_check][black_check_16]
+            - `ch_dir(path)` ![black_check][black_check_16]
             - `get_current_working_directory()`
-            - `list_directories(path)`
+            - `list_directories(path)` ![black_check][black_check_16]
             - `walk_directories(top, topdown=True, onerror=None, followlinks=False)`
-        - ![python][python_16] file_handler.py
-            - `read_file(path)`
-            - `write_to_file(path, content)`
-            - `create_file(path, content=None)`
-            - `remove_file(path)`
+        - ![python][python_16] file_handler.py ![green_check][green_check_16]
+            - `read_file(path)` ![black_check][black_check_16]
+            - `write_to_file(path, content)` ![black_check][black_check_16]
+            - `create_file(path, content=None)` ![black_check][black_check_16]
+            - `remove_file(path)` ![black_check][black_check_16]
         - ![python][python_16] path_handler.py
-            - `join_paths(path, *paths)`
-            - `path_exists(path)`
+            - `join_paths(path, *paths)` ![black_check][black_check_16]
+            - `path_exists(path)` ![black_check][black_check_16]
             - `absolute_path(path)`
-            - `relative_path(path, start)`
-            - `get_parent_dir_name(path)`
-            - `get_path_basename(path)`
-            - `get_unix_style_path_basename(path)`
-            - `is_directory(path)`
-            - `get_path_size(path)`
-            - `split_path(path)`
-            - `split_extension(path)`
-        - ![python][python_16] random_string_builder.py
+            - `relative_path(path, start)` ![black_check][black_check_16]
+            - `get_parent_dir_name(path)` ![black_check][black_check_16]
+            - `get_path_basename(path)` ![black_check][black_check_16]
+            - `get_unix_style_path_basename(path)` ![black_check][black_check_16]
+            - `is_directory(path)` ![black_check][black_check_16]
+            - `get_path_size(path)` ![black_check][black_check_16]
+            - `split_path(path)` ![black_check][black_check_16]
+            - `split_extension(path)` ![black_check][black_check_16]
+        - ![python][python_16] random_string_builder.py ![three][three_16]
             - `random_string(length)`
-        - ![python][python_16] system_environment_variable_getter.py
-            - `get_required_variable(var_name)`
-            - `get_variable_with_default(var_name, default)`
-            - `get_variable_with_default_none(var_name)`
+        - ![python][python_16] system_environment_variable_getter.py ![green_check][green_check_16]
+            - `get_required_variable(var_name)` ![black_check][black_check_16]
+            - `get_variable_with_default(var_name, default)` ![black_check][black_check_16]
+            - `get_variable_with_default_none(var_name)` ![black_check][black_check_16]
         - ![python][python_16] template_file_copyer.py
-            - `copy_template_file_and_replace_keywords(src, dst, args)`
+            - `copy_template_file_and_replace_keywords(src, dst, args)` ![black_check][black_check_16]
             - `_create_parent_dir(dst)`
-            - `_copy_file_and_replace_keywords(dst, template, args)`
+            - `_copy_file_and_replace_keywords(dst, template, args)` ![black_check][black_check_16]
             - `_format_template(template, args)`
-            - `_get_number_of_template_fillers(template)`
-        - ![python][python_16] utility.py
+            - `_get_number_of_template_fillers(template)` ![black_check][black_check_16]
+        - ![python][python_16] utility.py ![two][two_16] - ![three][three_16]
             - `get_user_dir()`
             - `admin_required(f)`
     - ![python][python_16] app_and_db.py ![stop][stop_16]
-- ![python][python_16] runserver.py
+- ![python][python_16] runserver.py ![two][two_16] - ![three][three_16]
     - `_config_is_debug()`
     - `_run_debug_server()`
     - `_run_server()`
