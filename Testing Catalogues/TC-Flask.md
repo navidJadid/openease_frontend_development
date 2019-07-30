@@ -6,6 +6,8 @@ Please add the ![green_check][green_check_16] icon behind every module that has 
 
 If a module is refactored, please consider indicating the changes in this file.
 
+**TODO**: add `__init__.py` files and files that should be ignored to a pytest ignore or alike
+
 - ![folder][folder_16] **Webrob**
     - ![folder][folder_16] **config**
         - ![python][python_16] settings.py ![stop][stop_16]
