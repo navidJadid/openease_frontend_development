@@ -231,8 +231,8 @@ If a module is refactored, please consider indicating the changes in this file.
         - ![python][python_16] init_db.py ![stop][stop_16]
         - ![python][python_16] init_webapp.py ![stop][stop_16]
     - ![folder][folder_16] **utility**
-        - ![python][python_16] db_connection_checker.py ![three][three_16]
-            - `got_db_connection(app, db)`
+        - ![python][python_16] db_connection_checker.py (![green_check][green_check_16])
+            - `got_db_connection(app, db)` (![black_check][black_check_16])
         - ![python][python_16] directory_handler.py
             - `mk_dir(path)` ![black_check][black_check_16]
             - `make_dirs(path)` ![black_check][black_check_16]
