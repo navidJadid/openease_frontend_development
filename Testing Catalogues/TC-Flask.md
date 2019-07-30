@@ -257,8 +257,8 @@ If a module is refactored, please consider indicating the changes in this file.
             - `get_path_size(path)` ![black_check][black_check_16]
             - `split_path(path)` ![black_check][black_check_16]
             - `split_extension(path)` ![black_check][black_check_16]
-        - ![python][python_16] random_string_builder.py ![three][three_16]
-            - `random_string(length)`
+        - ![python][python_16] random_string_builder.py ![green_check][green_check_16]
+            - `random_string(length)` ![black_check][black_check_16]
         - ![python][python_16] system_environment_variable_getter.py ![green_check][green_check_16]
             - `get_required_variable(var_name)` ![black_check][black_check_16]
             - `get_variable_with_default(var_name, default)` ![black_check][black_check_16]
