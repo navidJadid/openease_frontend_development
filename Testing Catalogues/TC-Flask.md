@@ -271,9 +271,10 @@ If a module is refactored, please consider indicating the changes in this file.
             - `_copy_file_and_replace_keywords(dst, template, args)` ![black_check][black_check_16]
             - `_format_template(template, args)`
             - `_get_number_of_template_fillers(template)` ![black_check][black_check_16]
-        - ![python][python_16] utility.py ![two][two_16] - ![three][three_16]
+        - ![python][python_16] user_directory_getter.py ![two][two_16] - ![three][three_16]
             - `get_user_dir()`
-            - `admin_required(f)`
+        - ![python][python_16] admin_checker.py ![two][two_16] - ![three][three_16]
+            - `admin_required(func)`
     - ![python][python_16] app_and_db.py ![stop][stop_16]
 - ![python][python_16] runserver.py ![two][two_16] - ![three][three_16]
     - `_config_is_debug()`
