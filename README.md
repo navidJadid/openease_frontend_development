@@ -7,6 +7,7 @@
 4. [Building and Running the whole thing](#4-building-and-running-the-whole-thing)
 5. [Development Procedure](#5-development-procedure)
 6. [CI & CD](#6-ci--cd)
+7. [Docker-Compose Volume Paths](#7-docker-compose-volume-paths)
 
 ### 1. Background and Purpose of this Repository
 As of May 2019 the openEASE project has launched with a new project architecture which splits it into several sub-repositories. Each of the sub-repositories is a docker-module which is deployed to docker-hub and then build as a whole with docker-compose in the root repository. This kind of architecture will hopefully increase the project's maintainability and ease the development of new features for the project, both for the researchers at the University of Bremen but also externals. Yet, as a consequence of this change, some parts of the system cannot be run or tested standalone anymore. This repository aims to setup a development environment for the front-end and webserver. It contains all the submodules and instructions needed to run and develop the mentioned components.
@@ -241,3 +242,97 @@ If code for the `postgres`-container is changed, the `postgres`-container has to
 
 ### 6. CI & CD
 Coming soon...
+
+### 7. Docker-Compose Volume Paths
+During development you might need to access files which are in a different sub-module than the one you are working on. For example, accessing the `css`-files (which are in the `openease_css`-submodule) from a `html`-file (which are located in the `openease_flask`-submodule). If volume paths are set correctly, `docker-compose` will redirect those path accesses to the desired volume.
+
+Let's look at an example from the `ease_crc`-project which all our repos are forked from:
+
+```
+version: '2'
+services:
+    [...]
+    
+    openease:
+        image: "openease/flask"
+        container_name: openease
+        [...]
+        volumes:
+            [...]
+            openease_css:/opt/webapp/webrob/static/css
+            [...]
+    
+    [...]
+
+volumes:
+    [...]
+    
+    # openEASE CSS code
+    openease_css:
+    
+    [...]
+```
+
+What this configuration does is the following: Whenever inside the `openease_flask` container the following path `/opt/webapp/webrob/static/css` or any sub-path of it accessed, then it is instead redirected to the mount point of our `openease_css`-volume. So accessing, for example, `/opt/webapp/webrob/static/css/SCSS/login.css` from `openease_flask` will go to our `openease_css`-volume and then look for `SCSS/login.css` from our mount point out.
+
+To successfully find the file, it is necessary to make sure it is put there when building the container. Let's check the `dockerfile` for the `openease_css`-container:
+
+```dockerfile
+FROM ubuntu
+ADD . /opt/webapp/webrob/static/css/
+VOLUME /opt/webapp/webrob/static/css/
+CMD /bin/sh
+```
+
+We can see all the files are copied to the mount point (`ADD` copies the files to the destination; `VOLUMES` sets the mount point). Therefore, you can access them like they are stored in your local directory. This would not be the case if, for example, some files would be put into a different directory. This is useful when there are files you do not want to expose to others via the volume interface, since only the files from the mount point on can be accessed.
+
+Please do not be confused by the fact that mount point in that `dockerfile` is identical to the path specified for redirecting inside the `docker-compose`. As far as we understand, the mount point could be any directory you like inside the target container.
+
+Having said all of this, if you want to access files from volumes, the procedure should be as follows:
+1. Check the volume path for the service inside the `docker-compose` of the project
+2. Check the mount path in the `dockerfile` of the project or at the bottom of the `docker-compose`
+3. Make sure files which you want to access are available from the mount point inside the target volume
+
+Let's quickly go through an example! Assume you want to create an icon folder inside the `openease_css`-submodule and put some images there which you want to access from an `html`-file (which are located inside the `openease_flask`-submodule). So we first check the volume path for the service, which is (as mentioned before): `/opt/webapp/webrob/static/css`. Then we check the mount point of the volume and if our file is copied there. We just looked at the `dockerfile` for the `openease_css` container and we know all the files from the submodule are copied to the mount point. Next we would create the folder `icons` inside the directory and put the files there; assume one of the files is called `robot.svg`. The path for the image accessed from the `html`-file would now look something like this:
+
+```
+/opt/webapp/webrob/static/css/icons/robot.svg
+```
+
+You could also use `flask`'s built in `url`-function, like this:
+
+```html
+<img src="{{ url_for('static', filename='css/icons/robot.svg') }}" [...]>
+```
+
+Normally you would now rebuild the containers and restart them, in order to see the changes. But for this development-server the rebuilding step (and sometimes the restarting one as well, s. [Chapter 5 Development Procedure](#5-development-procedure)) is not necessary, because we use bind mounts which enable us to mount directories from our machine. If you are curious about the configuration, consider reading the side note below.
+
+We hope this little insight helps to understand volume paths for this project :) Yet, we again strongly advise going through the `dockerfile`- or `docker-compose`-documentation in case of doubt. To be honest, we are not sure if our current approach is the best. It certainly complicates things a little for the developers, but on the other hand it helps us keep repositories clean and separated. If you have questions, suggestions, or more insights, feel free to create an issue or get into contact with us :)
+
+<sub>**Side note for curious people:** In our development repository the volume is defined a little differently, so it can be used like a bind mount. This way live changes can be reflected during runtime (which is like... super handy for development), but the way it works is basically the same. Instead of redirecting everything to the container, it redirects to the directory on our machine. Of course in `production` this 'feature' is not available anymore (since they do not use this repository's `docker-compose`-file). The `docker-compose` in our case only differs in the volume declarations, meaning this part remains the same:
+
+```
+openease:
+    [...]
+    volumes:
+        [...]
+        openease_css:/opt/webapp/webrob/static/css
+        [...]
+```
+
+I.e. the path accessed in the container which is to be redirected remains the same. But we change the destination to the aforementioned directory on our machine:
+
+```
+volumes:
+[...]
+# openEASE CSS code
+  openease_css:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: ${OPENEASE_WEBSERVER_DEV}/openease_css
+[...]
+```
+
+Remember from the setup of the repository, the `OPENEASE_WEBSERVER_DEV` is a system environment variable we set which points to the root of this repository. </sub>
