@@ -10,14 +10,14 @@
 7. [Docker-Compose Volume Paths](#7-docker-compose-volume-paths)
 
 ### 1. Background and Purpose of this Repository
-As of May 2019 the openEASE project has launched with a new project architecture which splits it into several sub-repositories. Each of the sub-repositories is a docker-module which is deployed to docker-hub and then build as a whole with docker-compose in the root repository. This kind of architecture will hopefully increase the project's maintainability and ease the development of new features for the project, both for the researchers at the University of Bremen but also externals. Yet, as a consequence of this change, some parts of the system cannot be run or tested standalone anymore. This repository aims to setup a development environment for the front-end and webserver. It contains all the submodules and instructions needed to run and develop the mentioned components.
+As of May 2019, the openEASE project has launched with a new project architecture which splits it into several sub-repositories. Each of the sub-repositories is a docker-module which is deployed to docker-hub and then build as a whole with docker-compose in the root repository. This kind of architecture will hopefully increase the project's maintainability and ease the development of new features for the project, both for the researchers at the University of Bremen but also externals. Yet, as a consequence of this change, some parts of the system cannot be run or tested standalone anymore. This repository aims to setup a development environment for the front-end and webserver. It contains all the submodules and instructions needed to run and develop the mentioned components.
 
-<sub>**Side Note:** We are aware that some of the procedures needed to work on this project are a bit 'annoying' or 'unhandy' (to say the least). We are constantly looking for ways to improve the setup procedure and the development flow, hence if you have suggestions consider writing us an email or editing this documentation and submitting a pull request.</sub>
+<sub>**Side Note:** We are aware that some of the procedures needed to work on this project are a bit 'annoying' or 'unhandy' (to say the least). We are constantly looking for ways to improve the setup procedure and the development flow. Thus, if you have suggestions, consider writing us an email or editing this documentation and submitting a pull request.</sub>
 
 ### 2. Setting up and Cloning the Repository correctly
-This repository utilizes git-submodules which allows us to include and develop the dependencies of this project, without having to include their files directly into this git-repository. When cloning this project correctly (which we will explain in a minute) the submodules are cloned from their own repositories. Now when changes are made to the submodules they are only pushed to the repository of the respective module and not to this repository.
+This repository utilizes git-submodules which allows us to include and develop the dependencies of this project, without having to include their files directly into this git-repository. When cloning this project correctly (which we will explain in a minute) the submodules are cloned from their own repositories. When changes are made to the submodules they are only pushed to the repository of the respective module and not to this repository.
 
-If this repository is cloned normally, then the submodules will not be cloned together with the main repository. There will be subfolders, but those will be empty. Now depending on whether you have write access to the repositories in use here (meaning this repository and all the repositories of the submodules), the workflow is slightly different:
+If this repository is cloned normally, then the submodules will not be cloned together with the main repository. There will be subfolders, but those will be empty. Now, depending on whether you have write access to the repositories in use here (meaning this repository and all the repositories of the submodules), the workflow is slightly different:
 
 - **If you have write access to all the repositories in use** or just want to run the project and not commit changes:  
     To load the repository with all submodules either of the following two approaches will work:
@@ -104,7 +104,7 @@ This project requires the use of:
 
 First it is necessary to create an 'episodes'-folder on your machine and set an environment variable pointing to it. This is needed, because some module in the open-EASE project requires such a folder to exist, otherwise the build will not complete. Again, we know this an inconvenience and we are working to have the project work without this necessity.
 
-For now please create a directory called `docker` somewhere on your machine. Inside that folder create another directory called `episodes`. Next you need to add a system environment variable `OPENEASE_EPISODE_DATA` which contains the path to the `episodes`-directory.
+For now, please create a directory called `docker` somewhere on your machine. Inside that folder create another directory called `episodes`. Next, you need to add a system environment variable `OPENEASE_EPISODE_DATA` which contains the path to the `episodes`-directory.
 
 On Linux, open the `.bashrc`-file (which is usually located in `/etc/.bashrc`) and add the following lines to the end:
 
@@ -126,14 +126,14 @@ Now either open a new terminal or if you had one opened already, execute the fol
 source ~/.bashrc
 ```
 
-As of right now we have not yet tested whether this works on Windows as well. We assume simply adding the environment variables in your system settings should do the job. If there are problems, please consider creating an issue or contacting us.
+As of right now, we have not yet tested whether this works on Windows as well. We assume simply adding the environment variables in your system settings should do the job. If there are problems, please consider creating an issue or contacting us.
 
 <sub>**Side Note:** Though not needed in any way for the development of the web server, if you want to download episodic memory data, you can do so as shown [here](http://www.knowrob.org/doc/docker#setting_up_experiment_logs). But be wary that around 40GB of disk space is needed for all episodic memory data.</sub>
 
-<sub>**Side Note:** For the following it is not possible to use the integrated Docker-functionalities of JetBrain IDEs (at least on Linux). This is due to the IDE not loading the environment variables which we define in `.bashrc`. Thus the `docker-compose` build will throw an error, because it cannot the access those environment variables.
+<sub>**Side Note:** For the following it is not possible to use the integrated Docker-functionalities of JetBrain IDEs (at least on Linux). This is due to the IDE not loading the environment variables which we define in `.bashrc`. Thus, the `docker-compose` build will throw an error, because it cannot the access those environment variables.
  If you want to use the JetBrains IDE Docker-functionalities, the work around is to start the IDE from the command line which will cause it to have all the environment variables defined in `.bashrc`. For convenience you can setup an alias for the IDE.</sub>
 
-Now to build and start the project (in detached mode mind you) run the following command in the root directory of the project:
+To build and start the project (in detached mode mind you) run the following command in the root directory of the project:
 
 ```
 docker-compose up -d
@@ -226,7 +226,7 @@ Depending on which files you would like to work on, the approach is a little dif
         **IMPORTANT**:
         When deleting the container and starting a new one, the old `openease.js` is loaded. This is due to fact that `openease.js` is built within the `Dockerfile`-script. Hence it is necessary to rebuild the `openease`-image to have the new `openease.js` in new containers.
         
-        As of right now, this is still untested, as we could not find any modules in this project which are directly referenced by `openease.js`. So if you run into issues, please make sure to let us now either via e-mail or by submitting an issue.
+        As of right now, this is still untested, as we could not find any modules in this project which are directly referenced by `openease.js`. So if you run into issues, please make sure to let us know either via e-mail or by submitting an issue.
 
 - **Python**:  
 Working with these files is a bit cumbersome for now. Basically on each change the container containing the webserver has to be restarted. This can simply be done by:
