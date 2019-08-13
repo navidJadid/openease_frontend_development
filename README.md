@@ -112,11 +112,19 @@ On Linux, open the `.bashrc`-file (which is usually located in `/etc/.bashrc`) a
 export OPENEASE_EPISODE_DATA="< system path to the mentioned directory >/docker/episodes/"
 ```
 
-as well as the following line:
+as well as the following lines:
 
 ```
 export OPENEASE_WEBSERVER_DEV="< system path to root of this repository >"
+
+export OPENEASE_ADMIN_PASSWORD=" < password of your choice >"
+export OPENEASE_MAIL_USERNAME=""
+export OPENEASE_MAIL_PASSWORD=""
+export OPENEASE_MESHES=""
+export OPENEASE_ROS_DISTRIBUTION=""
 ```
+
+The latter 5 lines are necessary for the system to run properly and for having an admin-user. You can then login as an admin with the username `admin` and your selected password.
 
 <sub>**Side Note:** See [this link](https://www.rc.fas.harvard.edu/resources/documentation/editing-your-bashrc/) on how to edit the `.bashrc`-file with the `nano`-editor or any other editor of your choice.</sub>
 
@@ -241,7 +249,9 @@ Working with these files is a bit cumbersome for now. Basically on each change t
 If code for the `postgres`-container is changed, the `postgres`-container has to be rebuilt.
 
 ### 6. CI & CD
-Coming soon...
+The `openease_flask` repository has first CI capabilities integrated now. Travis and CodeCov are both connected. The `openease_js` repository would be next in line, but currently we are busy writing tests for the flask-repository.
+
+More coming in the future...
 
 ### 7. Docker-Compose Volume Paths
 During development you might need to access files which are in a different sub-module than the one you are working on. For example, accessing the `css`-files (which are in the `openease_css`-submodule) from a `html`-file (which are located in the `openease_flask`-submodule). If volume paths are set correctly, `docker-compose` will redirect those path accesses to the desired volume.
