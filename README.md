@@ -102,6 +102,8 @@ This project requires the use of:
 1. `docker` ([docker distributions and installation guides for different OS](https://docs.docker.com/install/))
 2. `docker-compose` ([installation guide](https://docs.docker.com/compose/install/)).
 
+<sub>**Side Note:** See [this link](http://www.knowrob.org/doc/docker) for the official installation gide of `openease`, if you run into problems not specified here.</sub>
+
 First it is necessary to create an 'episodes'-folder on your machine and set an environment variable pointing to it. This is needed, because some module in the open-EASE project requires such a folder to exist, otherwise the build will not complete. Again, we know this an inconvenience and we are working to have the project work without this necessity.
 
 For now, please create a directory called `docker` somewhere on your machine. Inside that folder create another directory called `episodes`. Next, you need to add a system environment variable `OPENEASE_EPISODE_DATA` which contains the path to the `episodes`-directory.
@@ -116,15 +118,17 @@ as well as the following lines:
 
 ```
 export OPENEASE_WEBSERVER_DEV="< system path to root of this repository >"
+```
 
+Additionally you can add the following 5 lines, if you want to have an admin-user, the password-restore option, and if you want to specify mesh repositories and your ros distribution. You can then login as an admin with the username `admin` and your selected password.
+
+```
 export OPENEASE_ADMIN_PASSWORD=" < password of your choice >"
 export OPENEASE_MAIL_USERNAME=""
 export OPENEASE_MAIL_PASSWORD=""
 export OPENEASE_MESHES=""
 export OPENEASE_ROS_DISTRIBUTION=""
 ```
-
-The latter 5 lines are necessary for the system to run properly and for having an admin-user. You can then login as an admin with the username `admin` and your selected password.
 
 <sub>**Side Note:** See [this link](https://www.rc.fas.harvard.edu/resources/documentation/editing-your-bashrc/) on how to edit the `.bashrc`-file with the `nano`-editor or any other editor of your choice.</sub>
 
