@@ -8,6 +8,7 @@
 5. [Development Procedure](#5-development-procedure)
 6. [CI & CD](#6-ci--cd)
 7. [Docker-Compose Volume Paths](#7-docker-compose-volume-paths)
+8. [Pull-Requests & Merging Strategy](#8-pull-requests--merging-strategy)
 
 ### 1. Background and Purpose of this Repository
 As of May 2019, the openEASE project has launched with a new project architecture which splits it into several sub-repositories. Each of the sub-repositories is a docker-module which is deployed to docker-hub and then build as a whole with docker-compose in the root repository. This kind of architecture will hopefully increase the project's maintainability and ease the development of new features for the project, both for the researchers at the University of Bremen but also externals. Yet, as a consequence of this change, some parts of the system cannot be run or tested standalone anymore. This repository aims to setup a development environment for the front-end and webserver. It contains all the submodules and instructions needed to run and develop the mentioned components.
@@ -350,3 +351,12 @@ volumes:
 ```
 
 Remember from the setup of the repository, the `OPENEASE_WEBSERVER_DEV` is a system environment variable we set which points to the root of this repository. </sub>
+
+### 8. Pull-Requests & Merging Strategy
+Once a feature (or set of features) which you would like to submit to the official `openEASE` is finished, you should first branch out from `development` or `master` at that commit in the corresponding submodule. Then you can submit the pull-request to the desired branch.
+
+Try to keep the set of changes in a pull-request coherent and as compact as possible. Overseeing a 10.000 line changes pull-requests is virtually impossible. Aim for smaller sized packages to submit, even if you end up submitting 10 pull-requests in a row. 
+
+After you submit your changes together with a description of them, you wait until either it gets accepted or the developers of the main repository reply on the pull-request thread, as they might have questions or propose changes or fixes which should be done before the pull-request can be merged. This is the point where the branching you did comes clutch. If you would have developed everything on `master` and submitted the pull-request from there, then you could not develop new features on the branch, because those would be submitted together in the pull-request. With the branching you can keep developing on the other branches, and have the separate branch where fixes or changes can be pushed to your pull-request.
+
+After your pull-request got accepted, you should merge your pull-request branch into *your* `master`, in order to keep the state of your `master` branch and the one from `openEASE` in sync. You can do that with a pull-request as well: Simply select your forked repository and desired branch for the merge. For the same reason, you should regularly rebase from said branch, given there are changes submitted to it. Afterwards you should delete the pull-request branch (unless there is a good reason for it), as having a lot of dangling branches can become chaotic.
